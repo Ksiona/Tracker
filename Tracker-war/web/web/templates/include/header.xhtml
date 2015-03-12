@@ -1,58 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-    <body>
-        <ui:composition>
-            <p:growl />
-		<table align="center" width="100%" class="login">
-			<tr>
-				
-				<td width="100%" class="login"><c:if
-						test="#{sessionHolderBean.getUserID() > 0}">
-						<h:form id="exitForm">
-							<table border="0" cellspacing="5" align="right">
-								<tr>
-									<td align="right">#{content.welcome} <h:outputText
-											value="#{sessionHolderBean.getUserLogin()}" />
-									</td>
-									<td align="left"><h:commandButton value="Выход"
-											action="#{sessionHolderBean.processExit()}" /></td>
-								</tr>
-							</table>
-						</h:form>
-					</c:if> <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">
-						<h:form id="loginForm">
-							<table border="0" cellspacing="5" align="right">
-								<tr>
-									<td align="right">#{content.login}</td>
-									<td align="left"><h:inputText id="userLogin"
-											value="#{sessionHolderBean.userLogin}" required="true"
-											binding="#{userLogin}"
-											requiredMessage="#{msg.login_required}">
-										</h:inputText></td>
-									<td align="right">#{content.pass}</td>
-									<td><h:inputSecret id="userPassword"
-											value="#{sessionHolderBean.userPassword}" required="true"
-											requiredMessage="#{msg.pass_required}">
-											<f:attribute name="userLogin" value="#{userLogin}" />
-											<f:validator
-												validatorId="ru.shmoylova.tracker.web.validators.LoginValidator" />
-										</h:inputSecret></td>
-									<td colspan="2" align="right"><h:commandButton
-											action="#{sessionHolderBean.processLogin()}"
-											value=" #{content.login_button}" /></td>
-                                    </tr>
-                                </table>
-                            </h:form>
-                        </c:if>
-                    </td>
-                </tr>
-            </table>
-        </ui:composition>
-    </body>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <p:growl />
+    <table align="center" width="100%" class="login">
+        <tr>
+
+            <td width="100%" class="login"><c:if
+                    test="#{sessionHolderBean.getUserID() > 0}">
+                    <h:form id="exitForm">
+                        <table border="0" cellspacing="5" align="right">
+                            <tr>
+                                <td align="right">#{content.welcome} <h:outputText
+                                        value="#{sessionHolderBean.getUserLogin()}" />
+                                </td>
+                                <td align="left"><h:commandButton value="Выход"
+                                                                  action="#{sessionHolderBean.processExit()}" /></td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </c:if> <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">
+                    <h:form id="loginForm">
+                        <table border="0" cellspacing="5" align="right">
+                            <tr>
+                                <td align="right">#{content.login}</td>
+                                <td align="left"><h:inputText id="userLogin"
+                                                              value="#{sessionHolderBean.userLogin}" required="true"
+                                                              binding="#{userLogin}"
+                                                              requiredMessage="#{msg.login_required}">
+                                    </h:inputText></td>
+                                <td align="right">#{content.pass}</td>
+                                <td><h:inputSecret id="userPassword"
+                                                   value="#{sessionHolderBean.userPassword}" required="true"
+                                                   requiredMessage="#{msg.pass_required}">
+                                        <f:attribute name="userLogin" value="#{userLogin}" />
+                                        <f:validator
+                                            validatorId="ru.shmoylova.tracker.web.validators.LoginValidator" />
+                                    </h:inputSecret></td>
+                                <td colspan="2" align="right"><h:commandButton
+                                        action="#{sessionHolderBean.processLogin()}"
+                                        value=" #{content.login_button}" /></td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </c:if>
+            </td>
+        </tr>
+    </table>
+</ui:composition>

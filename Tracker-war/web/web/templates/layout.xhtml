@@ -8,8 +8,8 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="css/default.css"/>
+        <h:outputStylesheet name="css/cssLayout.css"/>
         <title>#{content.app_title}</title>
     </h:head>
 
@@ -21,13 +21,13 @@
             </ui:insert>
         </div>
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
-            <div id="left">
+            <div id="left" class="left_content">
                 <ui:insert name="menu" >
                     <ui:include src="include/menu.xhtml"/>
                 </ui:insert>
             </div>
         </c:if>
-        <div id="content" class="left_content">
+        <div id="content" class="center_content" >
             <ui:insert name="body" >
                 <ui:include src="include/content.xhtml"/>
             </ui:insert>

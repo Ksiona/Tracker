@@ -44,7 +44,7 @@
         <from-view-id>/web/category/employee.xhtml</from-view-id>
         <navigation-case>
             <description>
-                Global rule for going to the employee add/edit page from any page  
+                Global rule for going to the employee add/edit page
             </description>
             <from-outcome>edit-emp</from-outcome>
             <to-view-id>/web/category/employee/update.xhtml</to-view-id>
@@ -52,7 +52,15 @@
         </navigation-case>
         <navigation-case>
             <description>
-                Global rule for going to the employee delete page from any page  
+                Global rule for going to the employee browse page  
+            </description>
+            <from-outcome>browse</from-outcome>
+            <to-view-id>/web/category/employee/browse.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <description>
+                Global rule for going to the employee delete page
             </description>
             <from-outcome>delete-emp</from-outcome>
             <to-view-id>/web/category/employee/delete.xhtml</to-view-id>
