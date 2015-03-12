@@ -36,7 +36,7 @@ public abstract class GenericDaoHibernateImpl<T extends BaseEntity> implements G
 
     protected Session getSession() {
         Session session = getSessionFactory().openSession();
-        session.beginTransaction();
+        session.beginTransaction();//TODO: if you manage the transaction for yourself, who's giong to commit/rollback it?
         return session;
     }
 

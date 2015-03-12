@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
-
+/**
+ * Such classes REALLY need some java-docs in their headers, just to know what this is all about.
+ * 
+ */
 public class Activity implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;

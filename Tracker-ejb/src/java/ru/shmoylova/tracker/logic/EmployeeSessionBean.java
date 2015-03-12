@@ -23,7 +23,7 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
 
     @Override
     public int processLogin(String login, String pass) {
-        Employee emp = empDao.loginRequest(login, pass.concat(MASK));
+        Employee emp = empDao.loginRequest(login, pass.concat(MASK));//What's that for?
         if (emp != null) {
             return emp.getEmpId();
         }
