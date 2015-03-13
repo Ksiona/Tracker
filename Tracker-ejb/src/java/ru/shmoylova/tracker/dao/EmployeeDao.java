@@ -1,7 +1,11 @@
 package ru.shmoylova.tracker.dao;
 
 import java.util.List;
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import ru.shmoylova.tracker.entity.Department;
 import ru.shmoylova.tracker.entity.Employee;
 import ru.shmoylova.tracker.entity.Role;
@@ -44,10 +48,47 @@ public class EmployeeDao extends GenericDaoHibernateImpl<Employee> implements IE
 
     @Override
     public Employee loginRequest(String login, String pass) {
-        Employee emp = (Employee) getSession().createQuery(HQL_QUERY_LOGIN_CHECK)
-                .setString(PARAMETR_USER_PASS, pass)
-                .setString(PARAMETR_USER_NAME, login.trim()).uniqueResult();
+        Employee emp;
+        Session session = getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            emp = (Employee) getSession().createQuery(HQL_QUERY_LOGIN_CHECK)
+                    .setString(PARAMETR_USER_PASS, pass)
+                    .setString(PARAMETR_USER_NAME, login.trim()).uniqueResult();
+            tx.commit();
+        } catch (HibernateException he) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw he;
+        } finally {
+            session.close();
+        }
         return emp;
+    }
+    
+        @Override
+    public List<Employee> findAll() {
+        List<Employee> empList;
+        Session session = getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+           empList = session.createCriteria(Employee.class).list();
+             for (Employee emp : empList) {
+            Hibernate.initialize(emp.getDepartment());
+        }
+            tx.commit();
+        } catch (HibernateException he) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw he;
+        } finally {
+            session.close();
+        }
+        return empList;
     }
 
 }

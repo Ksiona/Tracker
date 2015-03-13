@@ -50,7 +50,7 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return empDao.findAll(Employee.class);
+        return empDao.findAll();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
         Employee checkEmp;
         String hash = getHash(employee.getPass());
         if ((checkEmp = empDao.get(Employee.class, employee.getEmpId())) != null) {
-            if (checkEmp.getPass() != employee.getPass()) {
+            if (!checkEmp.getPass().equals(employee.getPass())) {
                 employee.setPass(hash);
             }
             empDao.update(employee);

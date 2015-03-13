@@ -16,7 +16,7 @@
             </key>
             <one-to-many class="GroupMember" />
         </set>
-        <set name="employees" table="employee" inverse="true" lazy="true" fetch="select">
+        <set name="employees" table="employee" inverse="true" lazy="false" fetch="join">
             <key>
                 <column name="roleID" not-null="true" />
             </key>

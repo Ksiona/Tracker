@@ -16,5 +16,4 @@ public interface GenericDao<T extends BaseEntity> {
 
     void delete(T entity);
 
-    List<T> findAll(Class<T> type);
 }
