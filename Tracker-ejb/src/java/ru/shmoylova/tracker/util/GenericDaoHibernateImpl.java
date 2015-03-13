@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.shmoylova.tracker.util;
 
 import java.util.List;
@@ -63,6 +58,7 @@ public abstract class GenericDaoHibernateImpl<T extends BaseEntity> implements G
 
     @Override
     public List<T> findAll(Class<T> type) {
-        return getSession().createCriteria(type).list();
+        List<T> list = getSession().createCriteria(type).list();
+        return list;
     }
 }

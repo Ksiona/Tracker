@@ -3,19 +3,16 @@ package ru.shmoylova.tracker.web.controllers;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
-import ru.shmoylova.tracker.entity.Department;
 import ru.shmoylova.tracker.entity.Employee;
-import ru.shmoylova.tracker.entity.Permission;
-import ru.shmoylova.tracker.entity.Role;
 import ru.shmoylova.tracker.interfaces.beans.EmployeeSessionBeanLocal;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class EmployeeController {
 
     @EJB
@@ -28,12 +25,12 @@ public class EmployeeController {
     private static final String PAGE_EMPLOYEE = "emplist";
     private static final String PAGE_INDEX = "index";
     private static final String PAGE_BROWSE = "browse";
+    private static final String PAGE_EDIT_EMP = "edit-emp";
     private static final String REQUEST_ERROR = "request_error";
     private static final String BUNDLE_LOC = "ru.shmoylova.tracker.web.nls.messages";
     private final ResourceBundle bundle;
     private int empId;
     private MessagesController printer = null;
-    private Employee emp;
     private DataModel empList;
     private int startId = 1;
     private int endId = 4;
@@ -42,25 +39,27 @@ public class EmployeeController {
 
     private Employee current;
     private int selectedItemIndex;
+    private String emptyPass;
 
     public EmployeeController() {
-        emp = new Employee();
         printer = new MessagesController();
         bundle = ResourceBundle.getBundle(BUNDLE_LOC, FacesContext.getCurrentInstance().getViewRoot().getLocale());
     }
 
     public String save() {
+        current.setPass(getEmptyPass());
         try {
-            employeeBean.insertOrUpdate(emp);
+            employeeBean.insertOrUpdate(current);
         } catch (Exception e) {
             printer.printError(shBean.getBundle(BUNDLE_LOC, ERROR_PREFIX_FOR_EDIT, REQUEST_ERROR));
         }
+        setEmptyPass("");
         return PAGE_EMPLOYEE;
     }
 
     public String delete() {
         try {
-            employeeBean.remove(emp);
+            employeeBean.remove(current);
         } catch (Exception e) {
             printer.printError(shBean.getBundle(BUNDLE_LOC, ERROR_PREFIX_FOR_DELETE, REQUEST_ERROR));
         }
@@ -68,6 +67,7 @@ public class EmployeeController {
     }
 
     public String cancel() {
+        current = null;
         return PAGE_EMPLOYEE;
     }
 
@@ -85,14 +85,17 @@ public class EmployeeController {
                 empList = new ListDataModel(employeeBean.getAllEmployees());
             }
         } catch (NullPointerException npe) {
-            printer.printError(shBean.getBundle(BUNDLE_LOC, ERROR_PREFIX_FOR_LIST,REQUEST_ERROR));
+            printer.printError(shBean.getBundle(BUNDLE_LOC, ERROR_PREFIX_FOR_LIST, REQUEST_ERROR));
         }
         return empList;
     }
     
-    public String getDepartmentName() {
-        String dept = current.getDepartment().getDeptName();
-        return dept;
+    public String getEmptyPass() {
+        return emptyPass;
+    }
+
+    public void setEmptyPass(String emptyPass) {
+        this.emptyPass = emptyPass;
     }
 
     void recreateModel() {
@@ -136,77 +139,13 @@ public class EmployeeController {
         return PAGE_BROWSE;
     }
 
+    public String prepareEdit() {
+        current = (Employee) getEmpList().getRowData();
+        return PAGE_EDIT_EMP;
+    }
+
     public String prepareList() {
         // recreateModel();
-        return PAGE_INDEX;
+        return PAGE_EMPLOYEE;
     }
-
-    public int getEmpId() {
-        return emp.getEmpId();
-    }
-
-    public void setEmpId(int empId) {
-        this.empId = empId;
-    }
-
-    public Department getDepartment() {
-        return emp.getDepartment();
-    }
-
-    public void setDepartment(Department department) {
-        this.emp.setDepartment(department);
-    }
-
-    public Permission getPermission() {
-        return emp.getPermission();
-    }
-
-    public void setPermission(Permission permission) {
-        this.emp.setPermission(permission);
-    }
-
-    public Role getRole() {
-        return emp.getRole();
-    }
-
-    public void setRole(Role role) {
-        this.emp.setRole(role);
-    }
-
-    public String getLastName() {
-        return emp.getLastName();
-    }
-
-    public void setLastName(String lastName) {
-        this.emp.setLastName(lastName);
-    }
-
-    public String getSurName() {
-        return emp.getSurName();
-    }
-
-    public void setSurName(String surName) {
-        this.emp.setSurName(surName);
-    }
-
-    public String getJobTitle() {
-        return emp.getJobTitle();
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.emp.setJobTitle(jobTitle);
-    }
-
-    public String getLogin() {
-        return emp.getLogin();
-    }
-
-    public void setLogin(String login) {
-        this.emp.setLogin(login);
-    }
-
-    public void setPass(String pass) {
-        this.emp.setPass(pass);
-    }
-
 }

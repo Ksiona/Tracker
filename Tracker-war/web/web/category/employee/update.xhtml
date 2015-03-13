@@ -1,35 +1,57 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/web/templates/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:h="http://java.sun.com/jsf/html">
-    <f:metadata>
-        <f:viewParam id="empId" name="empId" value="#{employeeController.empId}"/>
-    </f:metadata>
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="/web/templates/layout.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="body">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
-            <c:if test="#{employeeController.empId > 0}">
+            <c:if test="#{employeeController.selected.empId > 0}">
                 <h2>Редактирование</h2>
             </c:if>
-            <c:if test="#{!(employeeController.empId > 0)}">
+            <c:if test="#{!(employeeController.selected.empId > 0)}">
                 <h2>Добавление</h2>
             </c:if>
-            <h:form id="empForm">
-                <table align="center">
-                    <tr>
-                        <td>Сотрудник</td>
-                        <td><h:inputText id="empName" value="#{employeeController.jobTitle}"/></td>
-                        <td><h:commandButton id="saveButton" value="Сохранить" action="#{employeeController.save}"/></td>
-                        <td><h:commandButton id="cancelButton" value="Отмена" action="#{employeeController.cancel}"/></td>
-                    </tr>
-                </table>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Фамилия:"/>
+                    <h:inputText id="lastName" value="#{employeeController.selected.lastName}"/>
+                    <h:outputText value="Имя"/>
+                    <h:inputText id="firstName" value="#{employeeController.selected.firstName}"/>
+                    <h:outputText value="Отчество"/>
+                    <h:inputText id="surName" value="#{employeeController.selected.surName}"/>
+                    <h:outputText value="Отдел:"/>
+                    <h:inputText id="deptName" value="#{employeeController.selected.department.deptName}"/>
+                    <h:outputText value="Должность"/>
+                    <h:inputText id="jobName" value="#{employeeController.selected.jobTitle}"/>
+                    <h:outputText value="Логин"/>
+                    <h:inputText id="empLogin" value="#{employeeController.selected.login}"/>
+                    <h:outputText value="Пароль"/>
+                    <h:inputSecret id="pass" value="#{employeeController.emptyPass}">
+                        <f:attribute name="lastName" value="#{lastName}" />
+                        <f:attribute name="firstName" value="#{firstName}" />
+                        <f:attribute name="surName" value="#{surName}" />
+                        <f:attribute name="deptName" value="#{deptName}" />
+                        <f:attribute name="jobName" value="#{jobName}" />
+                        <f:attribute name="empLogin" value="#{empLogin}" />
+                        <f:attribute name="empId" value="#{empId}" />
+                        <f:validator
+                            validatorId="ru.shmoylova.tracker.web.validators.EmpFormValidator" />
+                    </h:inputSecret>
+                    <h:inputText id="empId" value="#{employeeController.selected.empId}" style="display: none"/>
+                </h:panelGrid>
+                <br/>
+                <br/>
+                <h:commandButton id="saveButton" value="Сохранить" action="#{employeeController.save}"/>
+                <h:commandButton id="cancelButton" value="Отмена" action="#{employeeController.cancel}"/>
+                <br/>
             </h:form>
         </c:if>
         <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">
-            <ui:include src="/web/error.xhtml"/>
+            <ui:include src="/web/templates/include/error.xhtml"/>
         </c:if>
-    </ui:define>  
+    </ui:define>
+
 </ui:composition>

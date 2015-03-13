@@ -10,21 +10,22 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="body">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
-            <h2>Список сотрудников</h2>
+            <h2>#{content.employees_list}</h2>
             <p>
-                <h:button value="Добавить новую запись" outcome="edit-emp"/>
+                <h:button value="#{content.button_new_value}" outcome="edit-emp"/>
             </p>
 
             <h:form styleClass="jsfcrud_list_form">
                 <h:commandLink action="#{employeeController.previous}" value="Previous #{employeeController.pageSize}" rendered="#{employeeController.hasPreviousPage}"/> 
                 <h:commandLink action="#{employeeController.next}" value="Next #{employeeController.pageSize}" rendered="#{employeeController.hasNextPage}"/> 
 
-                <h:dataTable width="100%" value="#{employeeController.empList}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                <h:dataTable  width="100%" value="#{employeeController.empList}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Name"/>
                         </f:facet>
-                        <h:outputText value="#{item.lastName} #{item.firstName}" />
+                        <h:outputText value="#{item.lastName} #{item.firstName} #{item.surName}" />
+
                     </h:column>
                     <h:column>
                         <f:facet name="header">
@@ -54,17 +55,13 @@
                         <f:facet name="header">
                             <h:outputText value="Action"/>
                         </f:facet>
-                        <h:selectOneListbox id="actions_list" size="1"
-                                            valueChangeListener="#{listBoxBean.performAction}"
-                                            onchange="submit()">
-                            <f:selectItems value="#{listBoxBean.actionListItems}"/>
-                        </h:selectOneListbox>
+                        <h:commandLink action="#{employeeController.prepareEdit}" value="Edit"/>
                     </h:column>
                 </h:dataTable>
                 <br/>
             </h:form>
             <p>
-                <h:button value="Добавить новую запись" outcome="edit-emp"/>
+                <h:button value="#{content.button_new_value}" outcome="edit-emp"/>
             </p>
         </c:if>
         <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">

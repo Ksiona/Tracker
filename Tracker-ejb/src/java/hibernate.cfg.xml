@@ -6,8 +6,6 @@
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
-    <!-- не читает параметр и не выполняется подстановка переменных во вложенные функции NativeSQL-->
-    <property name="hibernate.connection.useServerPrepStmts">false</property>
     <property name="hibernate.transaction.flush_before_completion">true</property>
     <property name="hibernate.connection.autocommit">true</property>
     <mapping resource="ru/shmoylova/tracker/entity/Department.hbm.xml"/>

@@ -15,8 +15,8 @@ import ru.shmoylova.tracker.util.GenericDaoHibernateImpl;
 public class EmployeeDao extends GenericDaoHibernateImpl<Employee> implements IEmployeeDao {
 
     private static final String PARAMETR_USER_NAME = "userName";
-    //TODO find another way
-    private static final String SQL_QUERY_LOGIN_CHECK = "Select * from tracker.dbo.employee where login = :userName And pass = CONVERT(varchar(max),  HashBytes('MD5', '";
+    private static final String PARAMETR_USER_PASS = "userPass";
+    private static final String HQL_QUERY_LOGIN_CHECK = "from Employee emp where emp.login = :userName and emp.pass = :userPass";
 
     public EmployeeDao(SessionFactory factory) {
         super(factory);
@@ -44,10 +44,10 @@ public class EmployeeDao extends GenericDaoHibernateImpl<Employee> implements IE
 
     @Override
     public Employee loginRequest(String login, String pass) {
-        return (Employee) getSession().createSQLQuery(SQL_QUERY_LOGIN_CHECK + pass + "'))")
-                .addEntity(Employee.class)
-                //   .setString("userPass",  pass) 
+        Employee emp = (Employee) getSession().createQuery(HQL_QUERY_LOGIN_CHECK)
+                .setString(PARAMETR_USER_PASS, pass)
                 .setString(PARAMETR_USER_NAME, login.trim()).uniqueResult();
+        return emp;
     }
 
 }

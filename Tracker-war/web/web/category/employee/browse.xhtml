@@ -3,7 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                template="templates/layout.xhtml"
+                template="/web/templates/layout.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="body">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
@@ -12,7 +12,7 @@
                     <h:outputText value="Name:"/>
                     <h:outputText value="#{employeeController.selected.lastName}" title="Name"/>
                     <h:outputText value="Department"/>
-                    <h:outputText value="#{employeeController.selected.department}"/>
+                    <h:outputText value="#{employeeController.selected.department.deptName}"/>
                     <h:outputText value="Job"/>
                     <h:outputText value="#{employeeController.selected.jobTitle}"/>
                 </h:panelGrid>
