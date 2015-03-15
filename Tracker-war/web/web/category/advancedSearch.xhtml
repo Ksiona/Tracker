@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/web/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="body" class="center_content">
+        <h:form>
+            <c:if test="#{sessionHolderBean.getUserID() > 0}">
+                <table class="tborder" align="center" border="0" cellpadding="5" cellspacing="1" width="100%">
+                    <tbody>
+                        <tr>
+                            <td class="tcat">
+                                <h2>#{content.advanced_search}</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="panelsurround" align="center">
+                                <table class="panel" border="0" cellpadding="0" cellspacing="3" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td align="left" valign="top" width="50%">
+                                                <fieldset class="fieldset" style="margin:0px">
+                                                    <legend>Поиск по ключевым словам</legend>
+                                                    <table border="0" cellpadding="0" cellspacing="3">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <div>Ключевые слова:</div>
+                                                                    <div><input class="inputfield" name="query" size="35" value="" style="width:260px" type="text"/></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <select name="searchType">
+                                                                        <option value="0" selected="selected">Искать в производственных объектах</option>
+                                                                        <option value="1">Искать по всей базе</option>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody></table>
+                                                </fieldset>
+                                            </td>
+                                            <td align="left" valign="top" width="50%">
+                                                <fieldset class="fieldset" style="margin:0px">
+                                                    <legend>Поиск по имени сотрудника</legend>
+                                                    <table border="0" cellpadding="0" cellspacing="3">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <div>Имя:</div>
+                                                                    <div id="userfield">
+                                                                        <input autocomplete="off" class="inputfield" name="searchuser" id="userfield_txt" size="35" value="" style="width:250px" type="text"/>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <select name="userSearchType">
+                                                                        <option value="0" selected="selected">Найти связанные производственные объекты</option>
+                                                                        <option value="1">Найти отчеты о деятельности</option>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody></table>
+                                                </fieldset>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <div id="options_search_adv" style="" align="left">
+                                <table class="panel" border="0" cellpadding="0" cellspacing="3" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <div class="thead" style="padding:5px">
+                                            <h3>Опции поиска</h3>
+                                            </div>
+                                        </tr>
+                                        <tr valign="top">
+                                            <td width="50%">
+                                                <fieldset class="fieldset">
+                                                    <legend>Искать производственные объекты по отделам</legend>
+                                                    <div style="padding:3px">
+                                                        <div>
+                                                            <select style="min-width:250px" name="prefixchoice[]" size="5" multiple="multiple">
+                                                                <option value="" selected="selected">(любой отдел)</option>
+
+                                                                <optgroup label="Геология">
+                                                                    <option value="year2013" class="">2013 год</option>
+                                                                    <option value="year2014" class="">2014 год</option>
+                                                                    <option value="year2015" class="">2015 год</option>
+
+                                                                </optgroup>
+
+                                                                <optgroup label="Геодезия">
+                                                                    <option value="year2013" class="">2013 год</option>
+                                                                    <option value="year2014" class="">2014 год</option>
+                                                                    <option value="year2015" class="">2015 год</option>
+                                                                </optgroup>
+
+                                                                <optgroup label="Землеустройство">
+                                                                    <option value="year2013" class="">2013 год</option>
+                                                                    <option value="year2014" class="">2014 год</option>
+                                                                    <option value="year2015" class="">2015 год</option>
+                                                                </optgroup>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+
+                                                <fieldset class="fieldset">
+                                                    <legend>Найти объекты</legend>
+                                                    <div style="padding:3px ">
+                                                        <select name="replyless" style="width:250px">
+                                                            <option value="0" selected="selected">в текущем производстве</option>
+                                                            <option value="1">завершенные</option>
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+
+                                                <fieldset class="fieldset">
+                                                    <legend>Искать объекты по временному интервалу</legend>
+                                                    <div style="padding:3px">
+                                                        <select name="searchdate" style="width:250px">
+                                                            <option value="0" selected="selected">все</option>
+                                                            <option value="1">вчера</option>
+                                                            <option value="7">за последнюю неделю</option>
+                                                            <option value="14">за 2 недели назад</option>
+                                                            <option value="30">за последний месяц</option>
+                                                            <option value="90">за последние 3 месяца</option>
+                                                            <option value="180">за последние 6 месяцев</option>
+                                                            <option value="365">за последний год</option>
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+
+                                                <fieldset class="fieldset">
+                                                    <legend>Критерии сортировки результата поиска</legend>
+                                                    <div style="padding:3px">
+                                                        <select name="sortby" style="width:250px">
+                                                            <option value="conclusionDate" selected="selected">Дата создания</option>
+                                                            <option value="title">Заголовок</option>
+                                                            <option value="owner">Исполнитель</option>
+                                                        </select>
+                                                        <select name="order" style="width:250px">
+                                                            <option value="descending" selected="selected">по убыванию</option>
+                                                            <option value="ascending">по возрастанию</option>
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </td>
+
+                                            <td width="50%">
+                                                <fieldset class="fieldset" style="margin:0px">
+                                                    <legend>Поиск по типам деятельности</legend>
+                                                    <div style="padding:3px">
+                                                        <div>
+                                                            <select style="width:100%" name="activityTypeChoice[]" size="20" multiple="multiple">
+                                                                <option value="0" selected="selected">Искать независимо от типа</option>
+                                                                <option value="1" class="activityType0">Геология</option>
+                                                                <option value="101" class="activityType1">    Бурение скважин</option>
+                                                                <option value="1011" class="activityType2">        Выбор и согласование места</option>
+                                                                <option value="1012" class="activityType2">        Откачивание грунтовых вод</option>
+                                                                <option value="1013" class="activityType2">        Постановка заглушки</option>
+                                                                <option value="1014" class="activityType2">        Отбор монолитов</option>
+                                                                <option value="102" class="activityType1">    Маркировка местности</option>
+                                                                <option value="103" class="activityType1">    Отправка образцов в лабораторию</option>
+                                                                <option value="104" class="activityType1">    Анализ результата</option>
+                                                                <option value="105" class="activityType1">    Подготовка отчета</option>
+                                                                <option value="2" class="activityType0">Геодезия</option>
+                                                                <option value="201" class="activityType1">    Подготовка плана съемки</option>
+                                                                <option value="2011" class="activityType2">        Согласование границ</option>
+                                                                <option value="2012" class="activityType2">        Получение разрешений</option>
+                                                                <option value="2013" class="activityType2">        Получение планшетов</option>
+                                                                <option value="202" class="activityType1">    Съемка</option>
+                                                                <option value="2021" class="activityType2">        Теодолитный ход</option>
+                                                                <option value="2022" class="activityType2">        Тахеометрический ход</option>
+                                                                <option value="2023" class="activityType2">        GPS съемка</option>                                                                        
+                                                                <option value="203" class="activityType1">    Обработка результатов</option>
+                                                                <option value="2031" class="activityType2">        Создание модели</option>
+                                                                <option value="2032" class="activityType2">        Оцифровка</option>   
+                                                                <option value="204" class="activityType1">    Согласование подземки</option>
+                                                                <option value="205" class="activityType1">    Подготовка отчета</option>
+                                                            </select>
+                                                        </div>
+                                                        <div><label for="activityTypes"><input name="childTypes" value="1" id="activityTypes" checked="checked" type="checkbox"/>Включая подразделы</label></div>
+                                                    </div>
+                                                </fieldset>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <div style="padding:3px">
+                                            <h:button value="Начать поиск" onclick="" />
+                                            <h:button value="Сброс" outcome="advancedSearch"/>
+                                            </div>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">
+                <ui:include src="/web/error.xhtml"/>
+            </c:if>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

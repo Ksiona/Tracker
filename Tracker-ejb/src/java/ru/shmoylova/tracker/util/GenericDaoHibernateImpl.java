@@ -1,6 +1,5 @@
 package ru.shmoylova.tracker.util;
 
-import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -63,7 +62,7 @@ public abstract class GenericDaoHibernateImpl<T extends BaseEntity> implements G
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.save(entity);
+            session.saveOrUpdate(entity);
             tx.commit();
         } catch (HibernateException he) {
             if (tx != null) {

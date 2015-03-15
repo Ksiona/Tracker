@@ -9,31 +9,40 @@
     <ui:define name="body">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
             <c:if test="#{employeeController.selected.empId > 0}">
-                <h2>Редактирование</h2>
+                <h2>#{content.page_title_edit}</h2>
             </c:if>
             <c:if test="#{!(employeeController.selected.empId > 0)}">
-                <h2>Добавление</h2>
+                <h2>#{content.page_title_new_row}</h2>
             </c:if>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputText value="Фамилия:"/>
+                    <h:outputText value="#{content.employee_last_name}"/>
                     <h:inputText id="lastName" value="#{employeeController.selected.lastName}"/>
-                    <h:outputText value="Имя"/>
+                    <h:outputText value="#{content.employee_first_name}"/>
                     <h:inputText id="firstName" value="#{employeeController.selected.firstName}"/>
-                    <h:outputText value="Отчество"/>
+                    <h:outputText value="#{content.employee_sur_name}"/>
                     <h:inputText id="surName" value="#{employeeController.selected.surName}"/>
-                    <h:outputText value="Отдел:"/>
-                    <h:inputText id="deptName" value="#{employeeController.selected.department.deptName}"/>
-                    <h:outputText value="Должность"/>
-                    <h:inputText id="jobName" value="#{employeeController.selected.jobTitle}"/>
-                    <h:outputText value="Логин"/>
+                    <h:outputText value="#{content.department}"/>
+                    <h:selectOneListbox id="deptName"  value="#{employeeController.selected.department}" converter="#{departmentConverter}" size="1" class="selector_list">
+                        <f:selectItems value="#{departmentController.deptList}" var="dept" itemLabel="#{dept.deptName}" itemValue="#{dept}"/>
+                    </h:selectOneListbox>
+                    <h:outputText value="#{content.employee_job}"/>
+                    <h:inputText  id="jobName" value="#{employeeController.selected.jobTitle}"/>
+                    <h:outputText value="#{content.login}"/>
                     <h:inputText id="empLogin" value="#{employeeController.selected.login}"/>
-                    <h:outputText value="Пароль"/>
-                    <h:inputSecret id="pass" value="#{employeeController.emptyPass}">
+                    <h:outputText value="#{content.employee_role}"/>
+                    <h:selectOneListbox id="empRole"  value="#{employeeController.selected.role}" converter="#{roleConverter}" size="1" class="selector_list">
+                        <f:selectItems value="#{permissionController.roleList}" var="role" itemLabel="#{role.roleName}" itemValue="#{role}"/>
+                    </h:selectOneListbox>
+                    <h:outputText value="#{content.permission}"/>
+                    <h:selectOneListbox id="objPermission"  value="#{employeeController.selected.permission}" converter="#{permissionConverter}" size="1" class="selector_list">
+                        <f:selectItems value="#{permissionController.permList}" var="perm" itemLabel="#{perm.permId}" itemValue="#{perm}"/>
+                    </h:selectOneListbox>
+                    <h:outputText value="#{content.pass}"/>
+                    <h:inputSecret id="pass" value="#{employeeController.selected.pass}">
                         <f:attribute name="lastName" value="#{lastName}" />
                         <f:attribute name="firstName" value="#{firstName}" />
                         <f:attribute name="surName" value="#{surName}" />
-                        <f:attribute name="deptName" value="#{deptName}" />
                         <f:attribute name="jobName" value="#{jobName}" />
                         <f:attribute name="empLogin" value="#{empLogin}" />
                         <f:attribute name="empId" value="#{empId}" />
@@ -44,8 +53,8 @@
                 </h:panelGrid>
                 <br/>
                 <br/>
-                <h:commandButton id="saveButton" value="Сохранить" action="#{employeeController.save}"/>
-                <h:commandButton id="cancelButton" value="Отмена" action="#{employeeController.cancel}"/>
+                <h:commandButton id="saveButton" value="#{content.action_save}" action="#{employeeController.save}"/>
+                <h:commandButton id="cancelButton" value="#{content.action_cancel}" action="#{employeeController.cancel}"/>
                 <br/>
             </h:form>
         </c:if>

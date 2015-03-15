@@ -3,6 +3,7 @@ package ru.shmoylova.tracker.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
@@ -103,6 +104,27 @@ public class ProductionUnit implements Serializable, BaseEntity {
 
     public void setActivities(Set<Activity> activities) {
         this.activities = activities;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        ProductionUnit unit = (ProductionUnit) obj;
+        if (unit == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof ProductionUnit)) {
+            return false;
+        }
+        return unitId == unit.unitId
+                && unitTitle.equals(unit.unitTitle);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + this.unitId;
+        hash = 89 * hash + Objects.hashCode(this.unitTitle);
+        return hash;
     }
 
 }

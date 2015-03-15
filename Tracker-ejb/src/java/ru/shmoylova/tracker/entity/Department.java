@@ -2,6 +2,7 @@ package ru.shmoylova.tracker.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
@@ -69,6 +70,27 @@ public class Department implements Serializable, BaseEntity {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Department dept = (Department) obj;
+        if (dept == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof Department)) {
+            return false;
+        }
+        return deptId == dept.deptId
+                && deptName.equals(dept.deptName);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + this.deptId;
+        hash = 23 * hash + Objects.hashCode(this.deptName);
+        return hash;
     }
 
 }

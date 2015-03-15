@@ -8,7 +8,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
-import ru.shmoylova.tracker.entity.Employee;
 
 /**
  *

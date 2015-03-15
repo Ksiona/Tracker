@@ -33,10 +33,18 @@
         </navigation-case>
         <navigation-case>
             <description>
-                Global rule for going to the employee list page from any page  
+                Global rule for going to the employee list page from any page
             </description>
             <from-outcome>emplist</from-outcome>
             <to-view-id>/web/category/employee.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <description>
+                Global rule for going to the employee list page from any page  
+            </description>
+            <from-outcome>advancedSearch</from-outcome>
+            <to-view-id>/web/category/advancedSearch.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

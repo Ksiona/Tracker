@@ -16,52 +16,54 @@
             </p>
 
             <h:form styleClass="jsfcrud_list_form">
-                <h:commandLink action="#{employeeController.previous}" value="Previous #{employeeController.pageSize}" rendered="#{employeeController.hasPreviousPage}"/> 
-                <h:commandLink action="#{employeeController.next}" value="Next #{employeeController.pageSize}" rendered="#{employeeController.hasNextPage}"/> 
-
-                <h:dataTable  width="100%" value="#{employeeController.empList}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                <h:dataTable  width="100%" styleClass="table" value="#{employeeController.empDataModel}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Name"/>
+                            <h:outputText value="#{content.employee_first_name}"/>
                         </f:facet>
                         <h:outputText value="#{item.lastName} #{item.firstName} #{item.surName}" />
 
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Department"/>
+                            <h:outputText value="#{content.department}"/>
                         </f:facet>
                         <h:outputText value="#{item.department.deptName}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Job"/>
+                            <h:outputText value="#{content.employee_job}"/>
                         </f:facet>
                         <h:outputText value="#{item.jobTitle}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Login"/>
+                            <h:outputText value="#{content.login}"/>
                         </f:facet>
                         <h:outputText value="#{item.login}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Role"/>
+                            <h:outputText value="#{content.employee_role}"/>
                         </f:facet>
                         <h:outputText value="#{item.role.roleName}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Action"/>
+                            <h:outputText value="#{content.actions}"/>
                         </f:facet>
-                        <h:commandLink action="#{employeeController.prepareEdit}" value="Edit"/>
+                        <h:commandLink action="#{employeeController.prepareEdit}" value="#{content.action_edit}"/>
+                        <h:commandLink action="#{employeeController.prepareView}" value="#{content.action_browse}"/>
+                        <h:commandLink action="#{employeeController.prepareDelete}" value="#{content.action_remove}"/>
                     </h:column>
                 </h:dataTable>
+                <h:commandLink action="#{employeeController.previous}" value="#{content.action_prev} #{employeeController.pageSize}" rendered="#{employeeController.hasPreviousPage}"/> 
+                <h:commandLink action="#{employeeController.next}" value="#{content.action_next} #{employeeController.pageSize}" rendered="#{employeeController.hasNextPage}"/> 
                 <br/>
             </h:form>
             <p>
                 <h:button value="#{content.button_new_value}" outcome="edit-emp"/>
+                <h:button value="#{content.advanced_search}" outcome="advancedSearch"/>
             </p>
         </c:if>
         <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">

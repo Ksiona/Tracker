@@ -23,7 +23,7 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
     private static final String MASK = "Klp889_93486739687";
     private static final String CRYPTO_ALGORYTHM = "MD5";
     private static final String ENCODING = "UTF-8";
-    EmployeeDao empDao;
+    private EmployeeDao empDao;
 
     public EmployeeSessionBean() {
         empDao = new EmployeeDao(HibernateUtil.getSessionFactory());
@@ -56,10 +56,13 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
     @Override
     public void insertOrUpdate(Employee employee) {
         Employee checkEmp;
-        String hash = getHash(employee.getPass());
+        String hash = getHash(employee.getPass().concat(MASK));
         if ((checkEmp = empDao.get(Employee.class, employee.getEmpId())) != null) {
-            if (!checkEmp.getPass().equals(employee.getPass())) {
+            if (!employee.getPass().equals("")) {
                 employee.setPass(hash);
+            }
+            else{
+                employee.setPass(checkEmp.getPass());
             }
             empDao.update(employee);
         } else {
@@ -70,6 +73,7 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
 
     @Override
     public void remove(Employee employee) {
+        empDao.delete(employee);
     }
 
 }

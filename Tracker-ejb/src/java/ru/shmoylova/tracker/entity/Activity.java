@@ -3,6 +3,7 @@ package ru.shmoylova.tracker.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
 public class Activity implements Serializable, BaseEntity {
@@ -105,4 +106,24 @@ public class Activity implements Serializable, BaseEntity {
         this.activityDesc = activityDesc;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Activity activity = (Activity) obj;
+        if (activity == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof Activity)) {
+            return false;
+        }
+        return activityId == activity.activityId
+                && activityType.equals(activity.activityType);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.activityId;
+        hash = 97 * hash + Objects.hashCode(this.activityType);
+        return hash;
+    }
 }

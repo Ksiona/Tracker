@@ -2,6 +2,7 @@ package ru.shmoylova.tracker.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
@@ -60,4 +61,24 @@ public class Role implements Serializable, BaseEntity {
         this.employees = employees;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Role role = (Role) obj;
+        if (role == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof Role)) {
+            return false;
+        }
+        return roleId == role.roleId
+                && roleName.equals(role.roleName);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + this.roleId;
+        hash = 71 * hash + Objects.hashCode(this.roleName);
+        return hash;
+    }
 }

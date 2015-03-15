@@ -67,18 +67,18 @@ public class EmployeeDao extends GenericDaoHibernateImpl<Employee> implements IE
         }
         return emp;
     }
-    
-        @Override
+
+    @Override
     public List<Employee> findAll() {
         List<Employee> empList;
         Session session = getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-           empList = session.createCriteria(Employee.class).list();
-             for (Employee emp : empList) {
-            Hibernate.initialize(emp.getDepartment());
-        }
+            empList = session.createCriteria(Employee.class).list();
+            for (Employee emp : empList) {
+                Hibernate.initialize(emp.getDepartment());
+            }
             tx.commit();
         } catch (HibernateException he) {
             if (tx != null) {

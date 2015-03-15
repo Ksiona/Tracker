@@ -6,14 +6,11 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:h="http://java.sun.com/jsf/html">
-    <f:metadata>
-        <f:viewParam id="empId" name="empId" value="#{employeeController.empId}"/>
-    </f:metadata>
     <ui:define name="body">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
-            <h2>Удаление записи о сотруднике</h2>
-            <h:form id="уьзForm">
-                <p>Вы действительно хотите удалить запись о сотруднике "<h:outputText value="#{employeeController.fullName}"/>"?
+            <h2>#{content.delete_emp}</h2>
+            <h:form id="empForm">
+                <p>#{content.delete_confirmation} <h:outputText value="#{employeeController.selected.toString()}"/>"?
                     <table align="center">
                         <tr>
                             <td><h:commandButton id="deleteButton" value="Удалить" action="#{employeeController.delete()}"/></td>

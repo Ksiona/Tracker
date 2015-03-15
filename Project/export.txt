@@ -1,0 +1,13 @@
+empID,lastName,firstName,surName,jobTitle,login,pass,deptID,roleID,permID
+1,Shmoylova,Kseniya,Vladimirovna,Admin,Ksiona,45B6426812E100EF0E6F16B7E49DB39D,10,1,1
+2,Mazulin,Alexandro,Alexandro,Boss,Lexandr,24FB61A98F7744B0CDE3B31A7298171E,30,2,1
+6,Golovina,Galina,Vladimirovna,Boss,Gallla,24FB61A98F7744B0CDE3B31A7298171E,40,2,1
+7,Polyaev,Sergey,Vladimirovich,Engineer-geodesist,Sergey,24FB61A98F7744B0CDE3B31A7298171E,40,4,1
+8,Borisov,Nikolay,Dmitrievich,Engineer-geodesist,Dmitrich,45B6426812E100EF0E6F16B7E49DB39D,40,4,1
+9,Mikushin,Anton,Sergeevich,Geolog,Troll,45B6426812E100EF0E6F16B7E49DB39D,30,4,1
+11,Volynskaya,Tat'yana,Gennad'evna,Boss,Tanyu,45B6426812E100EF0E6F16B7E49DB39D,20,2,1
+12,Kuz'mina,Nadezhda,Nikolaevna,Engineer-cadastr,Nadin,45B6426812E100EF0E6F16B7E49DB39D,20,4,1
+13,Artyuhovich,Mariya,Sergeevna,Geolog,Marry,45B6426812E100EF0E6F16B7E49DB39D,30,4,1
+14,Sviyazov,Dmitriy,Anatol'evich,Geodezist,Dimon,45B6426812E100EF0E6F16B7E49DB39D,40,4,1
+15,Kolesnikov,Nikolay,Sergeevich,Engineer-geodesist,Koles,45B6426812E100EF0E6F16B7E49DB39D,40,4,1
+16,Shlyahin,Sergey,Vital'evich,Geodezist,Shilo,45B6426812E100EF0E6F16B7E49DB39D,40,4,1

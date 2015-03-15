@@ -101,4 +101,23 @@ public class Permission implements Serializable, BaseEntity {
         this.activityTypes = activityTypes;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Permission perm = (Permission) obj;
+        if (perm == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof Permission)) {
+            return false;
+        }
+        return permId == perm.permId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 73 * hash + this.permId;
+        return hash;
+    }
+
 }

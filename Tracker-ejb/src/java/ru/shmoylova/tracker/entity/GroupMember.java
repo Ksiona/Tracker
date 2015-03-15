@@ -43,4 +43,23 @@ public class GroupMember implements Serializable, BaseEntity {
         this.role = role;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        GroupMember grMem = (GroupMember) obj;
+        if (grMem == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof GroupMember)) {
+            return false;
+        }
+        return memberId == grMem.memberId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.memberId;
+        return hash;
+    }
+
 }

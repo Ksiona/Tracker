@@ -2,6 +2,7 @@ package ru.shmoylova.tracker.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
@@ -72,4 +73,24 @@ public class ActivityType implements Serializable, BaseEntity {
         this.activities = activities;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        ActivityType type = (ActivityType) obj;
+        if (type == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof ActivityType)) {
+            return false;
+        }
+        return typeId == type.typeId
+                && typeTitle.equals(type.typeTitle);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.typeId;
+        hash = 37 * hash + Objects.hashCode(this.typeTitle);
+        return hash;
+    }
 }

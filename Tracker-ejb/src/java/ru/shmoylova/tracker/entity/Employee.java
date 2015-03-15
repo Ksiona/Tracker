@@ -1,13 +1,16 @@
 package ru.shmoylova.tracker.entity;
 
 import java.io.Serializable;
+import java.util.Formatter;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
 public class Employee implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
+    private static final String FORMATTER_FULL_NAME = "%s %s %s";
     private int empId;
     private Department department;
     private Permission permission;
@@ -49,6 +52,12 @@ public class Employee implements Serializable, BaseEntity {
         this.pass = pass;
         this.productionUnits = productionUnits;
         this.activities = activities;
+    }
+
+    public Employee(Department department, Role role, Permission permission) {
+        this.department = department;
+        this.role = role;
+        this.permission = permission;
     }
 
     public int getEmpId() {
@@ -145,6 +154,36 @@ public class Employee implements Serializable, BaseEntity {
 
     public void setActivities(Set<Activity> activities) {
         this.activities = activities;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Employee emp = (Employee) obj;
+        if (emp == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof Employee)) {
+            return false;
+        }
+        return empId == emp.empId
+                && lastName.equals(emp.lastName)
+                && firstName.equals(emp.firstName);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + this.empId;
+        hash = 83 * hash + Objects.hashCode(this.lastName);
+        hash = 83 * hash + Objects.hashCode(this.firstName);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        Formatter fmt = new Formatter();
+        fmt.format(FORMATTER_FULL_NAME, lastName, firstName, surName);
+        return fmt.toString();
     }
 
 }

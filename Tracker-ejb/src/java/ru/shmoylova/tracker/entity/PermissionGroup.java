@@ -2,6 +2,7 @@ package ru.shmoylova.tracker.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
@@ -68,6 +69,27 @@ public class PermissionGroup implements Serializable, BaseEntity {
 
     public void setGroupMembers(Set<GroupMember> groupMembers) {
         this.groupMembers = groupMembers;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        PermissionGroup permGr = (PermissionGroup) obj;
+        if (permGr == this) {
+            return true;
+        }
+        if ((obj == null) && !(obj instanceof PermissionGroup)) {
+            return false;
+        }
+        return groupId == permGr.groupId
+                && groupName.equals(permGr.groupName);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + this.groupId;
+        hash = 29 * hash + Objects.hashCode(this.groupName);
+        return hash;
     }
 
 }

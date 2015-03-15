@@ -21,7 +21,6 @@ public class EmpFormValidator implements Validator {
     private static final String COMPONENT_LAST_NAME = "lastName";
     private static final String COMPONENT_FIRST_NAME = "firstName";
     private static final String COMPONENT_SUR_NAME = "surName";
-    private static final String COMPONENT_DEPT_NAME = "deptName";
     private static final String COMPONENT_JOB_NAME = "jobName";
     private static final String COMPONENT_LOGIN = "empLogin";
     private static final String COMPONENT_ID = "empId";
@@ -36,7 +35,7 @@ public class EmpFormValidator implements Validator {
 
         ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_LOC, FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
-        String names[] = new String[]{COMPONENT_LAST_NAME, COMPONENT_FIRST_NAME, COMPONENT_DEPT_NAME, COMPONENT_JOB_NAME, COMPONENT_LOGIN};
+        String names[] = new String[]{COMPONENT_LAST_NAME, COMPONENT_FIRST_NAME, COMPONENT_JOB_NAME, COMPONENT_LOGIN};
         List<String> values = new ArrayList<>();
         for (String property : names) {
             values.add(getProperty(property, component));
@@ -48,7 +47,7 @@ public class EmpFormValidator implements Validator {
         try {
             String newValue = value.toString();
 
-            if (newValue.length() < 1 && empId != null) {
+            if (newValue.length() < 1 && empId == null) {
                 throw new IllegalArgumentException(bundle.getString(ERROR_PASS_REQUIRED));
             }
 
