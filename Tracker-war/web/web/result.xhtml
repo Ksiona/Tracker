@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/web/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="body" class="center_content">
+        <c:if test="#{sessionHolderBean.getUserID() > 0}">
+            <h:form>
+                <div style="padding:5px">
+                    <h2>#{content.search_result}</h2>
+                </div>
+                <h:panelGroup >
+                    <c:forEach items="#{searchController.getResultItems()}" var="result" >
+                        <c:if test="#{result.size > 0}">
+                            <ui:include src="#{result.page}"/>
+                        </c:if>
+                    </c:forEach>
+                </h:panelGroup>
+            </h:form>
+        </c:if>
+        <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">
+            <ui:include src="/web/error.xhtml"/>
+        </c:if>
+    </ui:define>
+</ui:composition>
+

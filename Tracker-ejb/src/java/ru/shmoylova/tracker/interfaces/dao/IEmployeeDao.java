@@ -20,8 +20,7 @@ public interface IEmployeeDao extends GenericDao<Employee> {
     List<Employee> find(Role role);
 
     Employee loginRequest(String login, String pass);
-    
-    
+
     List<Employee> findAll();
 
 }

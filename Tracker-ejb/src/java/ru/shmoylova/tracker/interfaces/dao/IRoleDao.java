@@ -8,7 +8,7 @@ import ru.shmoylova.tracker.entity.Role;
  * @author Ksiona
  */
 public interface IRoleDao extends GenericDao<Role> {
-    
+
     List<Role> findAll();
 
 }

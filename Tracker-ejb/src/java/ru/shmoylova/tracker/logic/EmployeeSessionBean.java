@@ -9,6 +9,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.xml.bind.DatatypeConverter;
+import org.hibernate.CacheMode;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.batchindexing.MassIndexerProgressMonitor;
 import ru.shmoylova.tracker.dao.EmployeeDao;
 import ru.shmoylova.tracker.entity.Employee;
 import ru.shmoylova.tracker.util.HibernateUtil;
@@ -60,8 +66,7 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
         if ((checkEmp = empDao.get(Employee.class, employee.getEmpId())) != null) {
             if (!employee.getPass().equals("")) {
                 employee.setPass(hash);
-            }
-            else{
+            } else {
                 employee.setPass(checkEmp.getPass());
             }
             empDao.update(employee);
@@ -74,6 +79,33 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
     @Override
     public void remove(Employee employee) {
         empDao.delete(employee);
+    }
+
+    @Override
+    public List<Employee> find(String... arr) {
+        return empDao.find(arr);
+    }
+
+    @Override
+    public void reIndexEntireDatabase() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        FullTextSession fullTextSession = Search.getFullTextSession(session);
+        try {
+            fullTextSession
+                    .createIndexer()
+                    .typesToIndexInParallel(2)
+                    .batchSizeToLoadObjects(25)
+                    .cacheMode(CacheMode.NORMAL)
+                    .threadsToLoadObjects(5)
+                    .idFetchSize(150)
+                    .startAndWait();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EmployeeSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        } finally {
+//            fullTextSession.close();
+//            session.close();
+//        }
     }
 
 }

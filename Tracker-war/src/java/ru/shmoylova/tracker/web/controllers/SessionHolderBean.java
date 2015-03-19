@@ -1,7 +1,5 @@
 package ru.shmoylova.tracker.web.controllers;
 
-import java.util.ResourceBundle;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -86,5 +84,18 @@ public class SessionHolderBean {
 
     public void printLastError() {
         messages.printError(getLastError());
+    }
+
+    public String visible() {
+        String name = FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath();
+        if (name.contains("result.xhtml")) {
+            return "false";
+        } else {
+            return "true";
+        }
+    }
+    
+    public void indexUpdate(){
+        employeeBean.reIndexEntireDatabase();
     }
 }

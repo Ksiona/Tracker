@@ -5,23 +5,72 @@ import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
+/**
+ * @author Ksiona
+ *
+ * Class for entity employee, with:
+ * <p>
+ * - getters and setters for String fields (lastName, firstName, surName,
+ * jobTitle, login, pass)</p>
+ * <p>
+ * - getters and setters for referense fields
+ * ({@link Department}, {@link Permission}, {@link ProductionUnit}, {@link Activity}, {@link Role})<br/>
+ * Department and Employee = one-to-many relation<br/>
+ * Permission and Employee = one-to-many relation, in this case "permission" is
+ * the permission to modify the object Employee, containing this field <br/>
+ * ProductionUnit and Employee = many-to-one relation, one employee can be
+ * owner(creator) of any units. In this case "production unit" is the object on
+ * which employees have to perform the work, "owner" is a responsible for the
+ * execution manager <br/>
+ * Activity and Employee = one-to-many relation, in this case "activity" is the
+ * concrete work on concrete production unit <br/>
+ * Role and Employee = one-to-many relation, in this case "role" is the the
+ * access level that determines the right to change or read any database
+ * objects</p>
+ * <p>
+ * - hibernate search annotations</p>
+ * <p>
+ * --@Indexed - indicates that the associated table should be indexed</p>
+ * <p>
+ * --@DocumentId - indicates that the field is the unique identifier for the
+ * indexed document</p>
+ * <p>
+ * --@Field - specified over the fields added to the index</p>
+ * @see Employee.hbm.xml - xml mapping and the rules for the relationship
+ */
+@Indexed
 public class Employee implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
     private static final String FORMATTER_FULL_NAME = "%s %s %s";
+    @DocumentId
     private int empId;
+    @IndexedEmbedded
     private Department department;
     private Permission permission;
+    @ContainedIn
     private Role role;
+    @Field
     private String lastName;
+    @Field
     private String firstName;
+    @Field
     private String surName;
+    @Field
     private String jobTitle;
+    @Field
     private String login;
     private String pass;
+    @IndexedEmbedded
     private Set<ProductionUnit> productionUnits = new HashSet<>(0);
+    @IndexedEmbedded
     private Set<Activity> activities = new HashSet<>(0);
 
     public Employee() {

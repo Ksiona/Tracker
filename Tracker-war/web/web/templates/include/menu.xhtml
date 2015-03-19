@@ -6,12 +6,35 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <f:view >
-        <h:form class="navigation_menu">
-            <p:menubar>
-                <p:submenu label="Администрирование БД">
+        <h:form>
+            <p:menu>
+                <p:submenu label="Навигация">
+                    <p:menuitem value="На главную" action="index" />
+                    <p:menuitem value="" disabled="true" />
                     <p:menuitem value="Сотрудники" action="emplist" />
+                    <p:menuitem value="Отделы" action="/web/notImpl.xhtml" />
+                    <p:menuitem value="Категории работ" action="/web/notImpl.xhtml" />
+                    <p:menuitem value="Рабочие объекты" action="/web/notImpl.xhtml" />
+                    <p:menuitem value="Произведенные работы" action="/web/notImpl.xhtml" />
+                    <p:menuitem value="Расширенный поиск" action="advancedSearch" />
+                    <p:menuitem value="Архив" action="/web/notImpl.xhtml" />
                 </p:submenu>
-            </p:menubar>
+                <p:submenu label="Администрирование БД">
+                    <p:menuitem value="Резервная копия" action="/web/notImpl.xhtml" />
+                    <p:menuitem value="Переиндексация базы данных" action="#{sessionHolderBean.indexUpdate()}" />
+                </p:submenu>
+                <p:submenu label="Документация">
+                    <p:menuitem value="Спецификация базы данных" action="/web/notImpl.xhtml" />
+                    <p:menuitem value="Полнотекстовый поиск" action="/web/notImpl.xhtml" />
+                    <p:menuitem value="Java_doc" action="/web/notImpl.xhtml" />
+                </p:submenu>
+                <p:submenu label="Полезные ссылки">
+                    <p:menuitem value="Документация GlassFish" url="https://glassfish.java.net/documentation.html" />
+                    <p:menuitem value="Справочник SQL" url="https://technet.microsoft.com/ru-ru/library/dn198336.aspx"/>
+                    <p:menuitem value="Hibernate Search" url="http://docs.jboss.org/hibernate/search/5.1/reference/en-US/html_single/" />
+                    <p:menuitem value="JSF на oracle.com" url="http://www.oracle.com/technetwork/topics/jsf-088681.html" />
+                </p:submenu>
+            </p:menu>
         </h:form>
     </f:view>
 </ui:composition>

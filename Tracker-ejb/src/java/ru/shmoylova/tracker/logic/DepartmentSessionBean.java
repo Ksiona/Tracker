@@ -20,11 +20,11 @@ import ru.shmoylova.tracker.util.HibernateUtil;
 public class DepartmentSessionBean implements DepartmentSessionBeanLocal {
 
     private DepartmentDao deptDao;
-    
-    public DepartmentSessionBean(){
+
+    public DepartmentSessionBean() {
         deptDao = new DepartmentDao(HibernateUtil.getSessionFactory());
     }
-    
+
     @Override
     public List<Department> getAllDepartments() {
         return deptDao.findAll();

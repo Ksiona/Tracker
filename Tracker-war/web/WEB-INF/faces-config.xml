@@ -41,10 +41,18 @@
         </navigation-case>
         <navigation-case>
             <description>
-                Global rule for going to the employee list page from any page  
+                Global rule for going to the advanced search page from any page  
             </description>
             <from-outcome>advancedSearch</from-outcome>
             <to-view-id>/web/category/advancedSearch.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <description>
+                Global rule for going to the search result page from any page  
+            </description>
+            <from-outcome>result</from-outcome>
+            <to-view-id>/web/result.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

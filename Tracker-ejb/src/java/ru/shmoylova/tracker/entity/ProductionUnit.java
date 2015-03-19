@@ -5,18 +5,34 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
+@Indexed
 public class ProductionUnit implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
+    @DocumentId
     private int unitId;
+    @ContainedIn
     private Employee employee;
     private Permission permission;
+    @Field
     private String unitTitle;
     private String unitDesc;
+    @Field
+    @DateBridge(resolution = Resolution.YEAR)
     private Date conclusionDate;
+    @Field
+    @DateBridge(resolution = Resolution.YEAR)
     private Date expireDate;
+    @IndexedEmbedded
     private Set<Activity> activities = new HashSet<>(0);
 
     public ProductionUnit() {

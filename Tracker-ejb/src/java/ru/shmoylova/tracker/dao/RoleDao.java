@@ -18,7 +18,7 @@ import ru.shmoylova.tracker.util.GenericDaoHibernateImpl;
  *
  * @author Ksiona
  */
-public class RoleDao extends GenericDaoHibernateImpl<Role> implements IRoleDao{
+public class RoleDao extends GenericDaoHibernateImpl<Role> implements IRoleDao {
 
     public RoleDao(SessionFactory factory) {
         super(factory);
@@ -43,5 +43,5 @@ public class RoleDao extends GenericDaoHibernateImpl<Role> implements IRoleDao{
         }
         return roleList;
     }
-    
+
 }

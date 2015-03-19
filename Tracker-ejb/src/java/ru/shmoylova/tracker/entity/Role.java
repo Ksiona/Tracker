@@ -4,14 +4,22 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
+@Indexed
 public class Role implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
+    @DocumentId
     private int roleId;
+    @Field
     private String roleName;
     private Set<GroupMember> groupMembers = new HashSet<>(0);
+    @IndexedEmbedded
     private Set<Employee> employees = new HashSet<>(0);
 
     public Role() {

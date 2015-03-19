@@ -15,13 +15,13 @@ import ru.shmoylova.tracker.util.HibernateUtil;
 public class PermissionSessionBean implements PermissionSessionBeanLocal {
 
     private PermissionDao permDao;
-    
-    public PermissionSessionBean(){
+
+    public PermissionSessionBean() {
         permDao = new PermissionDao(HibernateUtil.getSessionFactory());
     }
-    
+
     @Override
     public List<Permission> getAllPermissions() {
-       return permDao.findAll();
+        return permDao.findAll();
     }
 }

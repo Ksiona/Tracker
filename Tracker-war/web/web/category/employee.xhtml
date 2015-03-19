@@ -10,61 +10,46 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="body">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
-            <h2>#{content.employees_list}</h2>
-            <p>
-                <h:button value="#{content.button_new_value}" outcome="edit-emp"/>
-            </p>
-
-            <h:form styleClass="jsfcrud_list_form">
-                <h:dataTable  width="100%" styleClass="table" value="#{employeeController.empDataModel}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{content.employee_first_name}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.lastName} #{item.firstName} #{item.surName}" />
-
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{content.department}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.department.deptName}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{content.employee_job}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.jobTitle}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{content.login}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.login}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{content.employee_role}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.role.roleName}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{content.actions}"/>
-                        </f:facet>
-                        <h:commandLink action="#{employeeController.prepareEdit}" value="#{content.action_edit}"/>
-                        <h:commandLink action="#{employeeController.prepareView}" value="#{content.action_browse}"/>
-                        <h:commandLink action="#{employeeController.prepareDelete}" value="#{content.action_remove}"/>
-                    </h:column>
-                </h:dataTable>
-                <h:commandLink action="#{employeeController.previous}" value="#{content.action_prev} #{employeeController.pageSize}" rendered="#{employeeController.hasPreviousPage}"/> 
-                <h:commandLink action="#{employeeController.next}" value="#{content.action_next} #{employeeController.pageSize}" rendered="#{employeeController.hasNextPage}"/> 
-                <br/>
-            </h:form>
-            <p>
-                <h:button value="#{content.button_new_value}" outcome="edit-emp"/>
-                <h:button value="#{content.advanced_search}" outcome="advancedSearch"/>
-            </p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="droplink" style="width: 100%;">
+                                <h:form styleClass="jsf_search_form">
+                                    <table border="0" cellpadding="4" cellspacing="1">
+                                        <tbody>
+                                            <tr class="vbmenu_option" title="">
+                                                <td>
+                                                    #{content.search}
+                                                    <h:inputText class="bginput" id="query" value="#{searchController.query}" size="25"/>
+                                                    <h:commandButton 
+                                                        action="#{searchController.search()}"
+                                                        value="#{content.begin_search}">
+                                                    </h:commandButton>
+                                                    <br/>
+                                                </td>
+                                                <td>
+                                                    <h:button value="#{content.button_new_value}" outcome="edit-emp"/>
+                                                </td>
+                                                <td>
+                                                    <h:button value="#{content.button_import}" outcome="edit-emp"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="advancedMenu_option">
+                                                    <h:commandLink action="advancedSearch" value="#{content.advanced_search}"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </h:form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            #{employeeController.recreateModel()}
+            <ui:include src="/web/category/employee/include/employeeTable.xhtml"/>	
         </c:if>
         <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">
             <ui:include src="/web/error.xhtml"/>

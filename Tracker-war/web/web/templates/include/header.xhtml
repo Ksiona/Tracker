@@ -15,8 +15,8 @@
                     <h:form id="exitForm">
                         <table border="0" cellspacing="5" align="right">
                             <tr>
-                                <td align="right">#{content.welcome} <h:outputText
-                                        value="#{sessionHolderBean.getUserLogin()}" />
+                                <td align="right">#{content.welcome} 
+                                    <h:outputText value="#{sessionHolderBean.getUserLogin()}" />
                                 </td>
                                 <td align="left"><h:commandButton value="Выход"
                                                                   action="#{sessionHolderBean.processExit()}" /></td>

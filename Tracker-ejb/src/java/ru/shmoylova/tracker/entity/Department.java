@@ -4,15 +4,25 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
+@Indexed
 public class Department implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
+    @DocumentId
     private int deptId;
     private Permission permission;
+    @Field
     private String deptName;
+    @IndexedEmbedded
     private Set<ActivityType> activityTypes = new HashSet<>(0);
+    @ContainedIn
     private Set<Employee> employees = new HashSet<>(0);
 
     public Department() {

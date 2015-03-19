@@ -13,11 +13,11 @@ import ru.shmoylova.tracker.util.HibernateUtil;
  */
 @Stateless
 public class RoleSessionBean implements RoleSessionBeanLocal {
-    
+
     private RoleDao roleDao;
-    
-    public RoleSessionBean(){
-         roleDao = new RoleDao(HibernateUtil.getSessionFactory());
+
+    public RoleSessionBean() {
+        roleDao = new RoleDao(HibernateUtil.getSessionFactory());
     }
 
     @Override
@@ -25,5 +25,4 @@ public class RoleSessionBean implements RoleSessionBeanLocal {
         return roleDao.findAll();
     }
 
-    
 }

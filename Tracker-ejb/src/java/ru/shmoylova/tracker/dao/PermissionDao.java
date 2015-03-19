@@ -18,7 +18,7 @@ import ru.shmoylova.tracker.util.GenericDaoHibernateImpl;
  *
  * @author Ksiona
  */
-public class PermissionDao extends GenericDaoHibernateImpl<Permission> implements IPermissionDao{
+public class PermissionDao extends GenericDaoHibernateImpl<Permission> implements IPermissionDao {
 
     public PermissionDao(SessionFactory factory) {
         super(factory);
@@ -43,5 +43,5 @@ public class PermissionDao extends GenericDaoHibernateImpl<Permission> implement
         }
         return permList;
     }
-    
+
 }

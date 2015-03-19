@@ -13,11 +13,12 @@ import ru.shmoylova.tracker.entity.Department;
 import ru.shmoylova.tracker.entity.Employee;
 import ru.shmoylova.tracker.entity.Permission;
 import ru.shmoylova.tracker.entity.Role;
+import ru.shmoylova.tracker.extra.IController;
 import ru.shmoylova.tracker.interfaces.beans.EmployeeSessionBeanLocal;
 
 @ManagedBean
 @SessionScoped
-public class EmployeeController {
+public class EmployeeController implements IController {
 
     @EJB
     EmployeeSessionBeanLocal employeeBean;
@@ -36,7 +37,9 @@ public class EmployeeController {
     private static final int ROWS_ON_PAGE = 10;
     private int empId;
     private DataModel empDataModel;
+
     private List<Employee> empList;
+
     private int startId = 1;
     private int endId = 10;
     private int recordCount;
@@ -47,7 +50,8 @@ public class EmployeeController {
     public EmployeeController() {
     }
 
-    public List<Employee> getEmpList() {
+    @Override
+    public List<Employee> getList() {
         return employeeBean.getAllEmployees();
     }
 
@@ -93,27 +97,39 @@ public class EmployeeController {
     }
 
     public DataModel getEmpDataModel() {
-        List<Employee> pageContent = new ArrayList<>();
-        empList = getEmpList();
-        for (int i = startId - 1; i < endId; i++) {
-            if (empList.size() == i) {
-                break;
-            }
-            pageContent.add(empList.get(i));
-        }
         try {
             if (empDataModel == null) {
-                empDataModel = new ListDataModel(pageContent);
+                empDataModel = new ListDataModel(getPageContent());
             }
-            recordCount = empList.size();
         } catch (NullPointerException npe) {
             messages.printError(messages.getBundle(messages.BUNDLE_MSG_LOC, ERROR_PREFIX_FOR_LIST, ERROR_REQUEST));
         }
         return empDataModel;
     }
 
-    void recreateModel() {
-        empDataModel = null;
+    public void setEmpDataModel(DataModel empDataModel) {
+        this.empDataModel = empDataModel;
+    }
+
+    public List<Employee> getPageContent() {
+        if (empList == null) {
+            this.empList = getList();
+        }
+        List<Employee> pageContent = new ArrayList<>();
+        for (int i = startId - 1; i < endId; i++) {
+            if (empList.size() == i) {
+                break;
+            }
+            pageContent.add(empList.get(i));
+        }
+        recordCount = empList.size();
+        return pageContent;
+    }
+
+    @Override
+    public void recreateModel() {
+        setEmpDataModel(null);
+        setList(null);
     }
 
     public boolean isHasNextPage() {
@@ -166,5 +182,10 @@ public class EmployeeController {
     public String prepareList() {
         recreateModel();
         return PAGE_EMPLOYEE;
+    }
+
+    @Override
+    public void setList(List empList) {
+        this.empList = empList;
     }
 }

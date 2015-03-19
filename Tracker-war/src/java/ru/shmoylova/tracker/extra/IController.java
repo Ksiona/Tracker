@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.shmoylova.tracker.interfaces.beans;
+package ru.shmoylova.tracker.extra;
 
 import java.util.List;
-import javax.ejb.Local;
-import ru.shmoylova.tracker.entity.Role;
+import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
 /**
  *
  * @author Ksiona
  */
-@Local
-public interface RoleSessionBeanLocal {
+public interface IController<T extends BaseEntity> {
 
-    List<Role> getAllRoles();
+    void recreateModel();
 
+    List<T> getList();
+
+    void setList(List<T> list);
 }

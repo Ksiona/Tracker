@@ -4,17 +4,33 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.NumericField;
+import org.hibernate.search.annotations.Resolution;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
+@Indexed
 public class Activity implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
+    @DocumentId
     private int activityId;
+    @ContainedIn
     private ActivityType activityType;
+    @ContainedIn
     private Employee employee;
     private Permission permission;
+    @ContainedIn
     private ProductionUnit productionUnit;
+    @Field
+    @DateBridge(resolution = Resolution.DAY)
     private Date dateWorks;
+    @Field
+    @NumericField
     private BigDecimal timeWorked;
     private String activityDesc;
 

@@ -19,4 +19,8 @@ public interface EmployeeSessionBeanLocal {
 
     void remove(Employee employee);
 
+    List<Employee> find(String... arr);
+
+    void reIndexEntireDatabase();
+
 }

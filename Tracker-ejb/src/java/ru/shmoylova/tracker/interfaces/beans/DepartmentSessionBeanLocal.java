@@ -17,5 +17,5 @@ import ru.shmoylova.tracker.entity.Department;
 public interface DepartmentSessionBeanLocal {
 
     List<Department> getAllDepartments();
-    
+
 }

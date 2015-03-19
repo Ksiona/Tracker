@@ -4,15 +4,25 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
+@Indexed
 public class ActivityType implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
+    @DocumentId
     private int typeId;
+    @ContainedIn
     private Department department;
     private Permission permission;
+    @Field
     private String typeTitle;
+    @IndexedEmbedded
     private Set<Activity> activities = new HashSet<>(0);
 
     public ActivityType() {

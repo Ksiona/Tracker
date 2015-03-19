@@ -7,6 +7,7 @@ import ru.shmoylova.tracker.entity.Department;
  *
  * @author Ksiona
  */
-public interface IDepartmentDao extends GenericDao<Department>{
-     List<Department> findAll();
+public interface IDepartmentDao extends GenericDao<Department> {
+
+    List<Department> findAll();
 }

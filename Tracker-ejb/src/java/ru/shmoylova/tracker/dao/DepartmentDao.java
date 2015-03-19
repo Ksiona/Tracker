@@ -18,7 +18,7 @@ import ru.shmoylova.tracker.util.GenericDaoHibernateImpl;
  *
  * @author Ksiona
  */
-public class DepartmentDao extends GenericDaoHibernateImpl<Department> implements IDepartmentDao{
+public class DepartmentDao extends GenericDaoHibernateImpl<Department> implements IDepartmentDao {
 
     public DepartmentDao(SessionFactory factory) {
         super(factory);
@@ -43,5 +43,5 @@ public class DepartmentDao extends GenericDaoHibernateImpl<Department> implement
         }
         return deptList;
     }
-    
+
 }
