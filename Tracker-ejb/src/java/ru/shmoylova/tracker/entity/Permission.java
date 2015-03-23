@@ -110,7 +110,7 @@ public class Permission implements Serializable, BaseEntity {
         if ((obj == null) && !(obj instanceof Permission)) {
             return false;
         }
-        return permId == perm.permId;
+        return permId == perm.permId ;
     }
 
     @Override

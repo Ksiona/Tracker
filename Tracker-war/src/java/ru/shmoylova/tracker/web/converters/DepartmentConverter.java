@@ -28,14 +28,12 @@ public class DepartmentConverter implements Converter {
                 dept = d;
             }
         }
-        System.out.println("converted to object: " + dept + "(" + dept.getDeptName() + ")");
         return dept;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         String res = String.valueOf(((Department) value).getDeptId());
-        System.out.println("converted to string: " + res);
         return res;
     }
 

@@ -4,7 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
     <ui:define name="body" class="center_content">
         <h:form>
             <c:if test="#{sessionHolderBean.getUserID() > 0}">
@@ -21,8 +22,7 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" valign="top" width="50%">
-                                                <fieldset class="fieldset" style="margin:0px">
-                                                    <legend>Поиск по ключевым словам</legend>
+                                                <p:fieldset class="fieldset" legend="Поиск по ключевым словам" style="margin:0px">
                                                     <table border="0" cellpadding="0" cellspacing="3">
                                                         <tbody>
                                                             <tr>
@@ -40,11 +40,10 @@
                                                                 </td>
                                                             </tr>
                                                         </tbody></table>
-                                                </fieldset>
+                                                </p:fieldset>
                                             </td>
                                             <td align="left" valign="top" width="50%">
-                                                <fieldset class="fieldset" style="margin:0px">
-                                                    <legend>Поиск по имени сотрудника</legend>
+                                                 <p:fieldset class="fieldset" legend="Поиск по имени сотрудника" style="margin:0px">
                                                     <table border="0" cellpadding="0" cellspacing="3">
                                                         <tbody>
                                                             <tr>
@@ -64,7 +63,7 @@
                                                                 </td>
                                                             </tr>
                                                         </tbody></table>
-                                                </fieldset>
+                                                </p:fieldset>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -82,8 +81,7 @@
                                         </tr>
                                         <tr valign="top">
                                             <td width="50%">
-                                                <fieldset class="fieldset">
-                                                    <legend>Искать производственные объекты по отделам</legend>
+                                                <p:fieldset class="fieldset" legend="Искать производственные объекты по отделам">
                                                     <div style="padding:3px">
                                                         <div>
                                                             <select style="min-width:250px" name="prefixchoice[]" size="5" multiple="multiple">
@@ -110,20 +108,18 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </fieldset>
+                                                </p:fieldset>
 
-                                                <fieldset class="fieldset">
-                                                    <legend>Найти объекты</legend>
+                                                <p:fieldset class="fieldset" legend="Найти объекты">
                                                     <div style="padding:3px ">
                                                         <select name="replyless" style="width:250px">
                                                             <option value="0" selected="selected">в текущем производстве</option>
                                                             <option value="1">завершенные</option>
                                                         </select>
                                                     </div>
-                                                </fieldset>
+                                                </p:fieldset>
 
-                                                <fieldset class="fieldset">
-                                                    <legend>Искать объекты по временному интервалу</legend>
+                                                <p:fieldset class="fieldset" legend="Искать объекты по временному интервалу">
                                                     <div style="padding:3px">
                                                         <select name="searchdate" style="width:250px">
                                                             <option value="0" selected="selected">все</option>
@@ -136,10 +132,9 @@
                                                             <option value="365">за последний год</option>
                                                         </select>
                                                     </div>
-                                                </fieldset>
+                                                </p:fieldset>
 
-                                                <fieldset class="fieldset">
-                                                    <legend>Критерии сортировки результата поиска</legend>
+                                                <p:fieldset class="fieldset" legend="Критерии сортировки результата поиска">
                                                     <div style="padding:3px">
                                                         <select name="sortby" style="width:250px">
                                                             <option value="conclusionDate" selected="selected">Дата создания</option>
@@ -151,12 +146,11 @@
                                                             <option value="ascending">по возрастанию</option>
                                                         </select>
                                                     </div>
-                                                </fieldset>
+                                                </p:fieldset>
                                             </td>
 
                                             <td width="50%">
-                                                <fieldset class="fieldset" style="margin:0px">
-                                                    <legend>Поиск по типам деятельности</legend>
+                                                <p:fieldset class="fieldset" legend="Поиск по типам деятельности" style="margin:0px">
                                                     <div style="padding:3px">
                                                         <div>
                                                             <select style="width:100%" name="activityTypeChoice[]" size="20" multiple="multiple">
@@ -189,7 +183,7 @@
                                                         </div>
                                                         <div><label for="activityTypes"><input name="childTypes" value="1" id="activityTypes" checked="checked" type="checkbox"/>Включая подразделы</label></div>
                                                     </div>
-                                                </fieldset>
+                                                </p:fieldset>
                                             </td>
                                         </tr>
                                         <tr>

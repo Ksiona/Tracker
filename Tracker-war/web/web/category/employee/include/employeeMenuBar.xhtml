@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:form>
+        <table style="border-style: hidden;">
+            <tbody>
+                <tr>
+                    <td align="left">
+                        <p:commandButton value="#{content.button_new_value}"  
+                                         actionListener="#{employeeController.prepareEdit(null)}" 
+                                         icon="ui-icon-contact" 
+                                         rendered="#{sessionHolderBean.visible()}"/>
+                        <p:commandButton value="#{content.action_edit}" 
+                                         actionListener="#{employeeController.prepareEdit(employeeController.selectedList[0])}" />
+                        <p:commandButton process=":jsfFormEmpTable:checkboxDT"
+                                         update=":removingForm:removingDetail"
+                                         value="#{content.action_remove}" 
+                                         oncomplete="PF('removingDialog').show()" />
+                        <p:commandButton process=":jsfFormEmpTable:checkboxDT" 
+                                         icon="ui-icon-search" 
+                                         value="#{content.action_browse}"  
+                                         actionListener="#{employeeController.prepareView()}"/>
+                    </td>
+                    <td align="right" width="23%">
+                        <p:commandButton value="#{content.button_import}" 
+                                         actionListener="#{employeeController.print()}" 
+                                         icon="ui-icon-document"
+                                         rendered="#{sessionHolderBean.visible()}"/>
+                        <p:commandButton value="#{content.button_export}" 
+                                         actionListener="#{employeeController.navigatiionHandler(this, 'export')}" 
+                                         icon="ui-icon-document"/>
+                    </td>
+                    <c:if test="#{sessionHolderBean.visible()}">
+                        <td align="right" width="23%" >
+                            <p:commandButton title="#{content.advanced_search}" 
+                                             icon="ui-icon-search" 
+                                             action="advancedSearch"/>
+                            <p:inputText id="query" 
+                                         value="#{searchController.query}" 
+                                         style="margin-right:10px" 
+                                         placeholder="Search"/>
+                            <p:commandButton value="#{content.begin_search}" 
+                                             action="#{searchController.search()}"/>
+                        </td>
+                    </c:if>
+                </tr>
+            </tbody>
+        </table>
+    </h:form>
+</ui:composition>

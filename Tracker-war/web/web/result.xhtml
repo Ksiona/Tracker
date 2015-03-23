@@ -8,8 +8,8 @@
     <ui:define name="body" class="center_content">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
             <h:form>
-                <div style="padding:5px">
-                    <h2>#{content.search_result}</h2>
+                <div style="padding:5px" class="thead">
+                    #{content.search_result}
                 </div>
                 <h:panelGroup >
                     <c:forEach items="#{searchController.getResultItems()}" var="result" >
@@ -19,6 +19,7 @@
                     </c:forEach>
                 </h:panelGroup>
             </h:form>
+            <ui:include src="/web/category/employee/include/removingForm.xhtml"/>
         </c:if>
         <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">
             <ui:include src="/web/error.xhtml"/>

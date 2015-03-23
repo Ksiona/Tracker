@@ -7,10 +7,10 @@
             <column name="permID" />
             <generator class="native" />
         </id>
-        <many-to-one name="permissionGroupByReadPer" class="PermissionGroup" fetch="select">
+        <many-to-one name="permissionGroupByReadPer" class="PermissionGroup" fetch="join">
             <column name="readPer" not-null="true" />
         </many-to-one>
-        <many-to-one name="permissionGroupByWritePer" class="PermissionGroup" fetch="select">
+        <many-to-one name="permissionGroupByWritePer" class="PermissionGroup" fetch="join">
             <column name="writePer" not-null="true" />
         </many-to-one>
         <set name="productionUnits" table="production_unit" inverse="true" lazy="true" fetch="select">

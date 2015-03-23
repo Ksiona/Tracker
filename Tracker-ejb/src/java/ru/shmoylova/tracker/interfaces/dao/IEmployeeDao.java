@@ -1,6 +1,8 @@
 package ru.shmoylova.tracker.interfaces.dao;
 
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.search.FullTextSession;
 import ru.shmoylova.tracker.entity.Department;
 import ru.shmoylova.tracker.entity.Employee;
 import ru.shmoylova.tracker.entity.Role;
@@ -11,16 +13,16 @@ import ru.shmoylova.tracker.entity.Role;
  */
 public interface IEmployeeDao extends GenericDao<Employee> {
 
-    List<Employee> find(String... searchTerm);
+    List<Employee> find(FullTextSession fullTextSession, String... searchTerm);
 
-    List<Employee> find(Department dept);
+    List<Employee> find(Session session, Department dept);
 
-    List<Employee> find(Department dept, String jobTitle);
+    List<Employee> find(Session session, Department dept, String jobTitle);
 
-    List<Employee> find(Role role);
+    List<Employee> find(Session session, Role role);
 
-    Employee loginRequest(String login, String pass);
+    Employee loginRequest(Session session, String login, String pass);
 
-    List<Employee> findAll();
+    List<Employee> getAll(Session session);
 
 }

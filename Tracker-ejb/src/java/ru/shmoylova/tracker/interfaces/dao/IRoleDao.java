@@ -1,6 +1,5 @@
 package ru.shmoylova.tracker.interfaces.dao;
 
-import java.util.List;
 import ru.shmoylova.tracker.entity.Role;
 
 /**
@@ -9,6 +8,5 @@ import ru.shmoylova.tracker.entity.Role;
  */
 public interface IRoleDao extends GenericDao<Role> {
 
-    List<Role> findAll();
 
 }

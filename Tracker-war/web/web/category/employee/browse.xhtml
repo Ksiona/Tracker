@@ -4,18 +4,67 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 template="/web/templates/layout.xhtml"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="body">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputText value="Name:"/>
-                    <h:outputText value="#{employeeController.selected.lastName}" title="Name"/>
-                    <h:outputText value="Department"/>
-                    <h:outputText value="#{employeeController.selected.department.deptName}"/>
-                    <h:outputText value="Job"/>
-                    <h:outputText value="#{employeeController.selected.jobTitle}"/>
-                </h:panelGrid>
+                <c:forEach items="#{employeeController.selectedList}" var="selected">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Name:"/>
+                        <h:outputText value="#{selected.lastName} #{selected.firstName} #{selected.surName}" title="Name"/>
+                        <h:outputText value="Position"/>
+                        <h:outputText value="#{selected.department.deptName}  #{selected.jobTitle}"/>
+                    </h:panelGrid>
+                    <c:if test ="#{!(selected.role.roleId > 3)}">
+                        <p:dataTable value="#{selected.productionUnits}" var="unit">
+                            <f:facet name="header">ProductionUnits</f:facet>
+                            <p:column>
+                                <f:facet name="header">Title</f:facet>
+                                <h:outputText value="#{unit.unitTitle}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Description</f:facet>
+                                <h:outputText value="#{unit.unitDesc}"/>
+                            </p:column>
+                            <p:column style="width: 10%;">
+                                <f:facet name="header">conclusion date</f:facet>
+                                <h:outputText value="#{unit.conclusionDate}"/>
+                            </p:column>
+                            <p:column style="width: 10%;">
+                                <f:facet name="header">expire date</f:facet>
+                                <h:outputText value="#{unit.expireDate}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </c:if>
+                    <c:if test ="#{(selected.role.roleId > 2)}">
+                        <p:dataTable value="#{selected.activities}" var="activity">
+                            <f:facet name="header">Activities</f:facet>
+                            <p:column>
+                                <f:facet name="header">Prodaction unit</f:facet>
+                                <h:outputText value="#{activity.productionUnit.unitTitle}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Type</f:facet>
+                                <h:outputText value="#{activity.activityType.typeTitle}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Date</f:facet>
+                                <h:outputText value="#{activity.dateWorks}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Time worked</f:facet>
+                                <h:outputText value="#{activity.timeWorked}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Description</f:facet>
+                                <h:outputText value="#{activity.activityDesc}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </c:if>
+                    <br style="width: 3px;"/>
+                </c:forEach>
                 <br/>
                 <br/>
                 <h:commandLink action="#{employeeController.prepareList}" value="View All List"/>

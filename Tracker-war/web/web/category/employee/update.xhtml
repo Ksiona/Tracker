@@ -54,7 +54,7 @@
                 <br/>
                 <br/>
                 <h:commandButton id="saveButton" value="#{content.action_save}" action="#{employeeController.save}"/>
-                <h:commandButton id="cancelButton" value="#{content.action_cancel}" action="#{employeeController.cancel}"/>
+                <h:commandButton  immediate="true" id="cancelButton" value="#{content.action_cancel}" action="#{employeeController.cancel}"/>
                 <br/>
             </h:form>
         </c:if>

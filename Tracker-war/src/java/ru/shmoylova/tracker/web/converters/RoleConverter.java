@@ -28,14 +28,12 @@ public class RoleConverter implements Converter {
                 role = r;
             }
         }
-        System.out.println("converted to object: " + role + "(" + role.getRoleName() + ")");
         return role;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         String res = String.valueOf(((Role) value).getRoleId());
-        System.out.println("converted to string: " + res);
         return res;
     }
 

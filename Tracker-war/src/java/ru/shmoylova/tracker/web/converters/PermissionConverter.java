@@ -28,14 +28,12 @@ public class PermissionConverter implements Converter {
                 perm = p;
             }
         }
-        System.out.println("converted to object: " + perm + "(" + perm.getPermId() + ")");
         return perm;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         String res = String.valueOf(((Permission) value).getPermId());
-        System.out.println("converted to string: " + res);
         return res;
     }
 

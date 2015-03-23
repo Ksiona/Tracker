@@ -12,6 +12,9 @@
             <base-name>ru.shmoylova.tracker.web.nls.content</base-name>
             <var>content</var>
         </resource-bundle>
+        <lifecycle>
+            <phase-listener>ru.shmoylova.tracker.extra.ReqRespListener</phase-listener>
+        </lifecycle>
     </application>
     <navigation-rule>
         <from-view-id>*</from-view-id>
@@ -55,6 +58,30 @@
             <to-view-id>/web/result.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <description>
+                Global rule for going to the employee browse page  
+            </description>
+            <from-outcome>browse</from-outcome>
+            <to-view-id>/web/category/employee/browse.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <description>
+                Global rule for going to the export page from any page
+            </description>
+            <from-outcome>export</from-outcome>
+            <to-view-id>/web/export.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <description>
+                Global rule for going to the import page from any page
+            </description>
+            <from-outcome>import</from-outcome>
+            <to-view-id>/web/import.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/web/category/employee.xhtml</from-view-id>
@@ -66,14 +93,7 @@
             <to-view-id>/web/category/employee/update.xhtml</to-view-id>
             <redirect />
         </navigation-case>
-        <navigation-case>
-            <description>
-                Global rule for going to the employee browse page  
-            </description>
-            <from-outcome>browse</from-outcome>
-            <to-view-id>/web/category/employee/browse.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
+
         <navigation-case>
             <description>
                 Global rule for going to the employee delete page

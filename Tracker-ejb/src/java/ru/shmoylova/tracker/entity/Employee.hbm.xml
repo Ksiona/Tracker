@@ -7,7 +7,7 @@
             <column name="empID" />
             <generator class="native" />
         </id>
-        <many-to-one name="department" cascade="save-update" class="Department" fetch="select">
+        <many-to-one name="department" cascade="save-update" class="Department" fetch="join">
             <column name="deptID" not-null="true" />
         </many-to-one>
         <many-to-one name="permission" cascade="save-update" class="Permission" fetch="join">
@@ -34,13 +34,13 @@
         <property name="pass" type="string">
             <column name="pass" length="15" not-null="true" />
         </property>
-        <set name="productionUnits" table="production_unit" inverse="true" lazy="true" fetch="select">
+        <set name="productionUnits" table="production_unit" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="ownerID" not-null="true" />
             </key>
             <one-to-many class="ProductionUnit" />
         </set>
-        <set name="activities" table="activity" inverse="true" lazy="true" fetch="select">
+        <set name="activities" table="activity" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="ownerID" not-null="true" />
             </key>

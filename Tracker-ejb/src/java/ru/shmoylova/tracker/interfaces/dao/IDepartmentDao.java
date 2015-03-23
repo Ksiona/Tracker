@@ -1,6 +1,5 @@
 package ru.shmoylova.tracker.interfaces.dao;
 
-import java.util.List;
 import ru.shmoylova.tracker.entity.Department;
 
 /**
@@ -9,5 +8,4 @@ import ru.shmoylova.tracker.entity.Department;
  */
 public interface IDepartmentDao extends GenericDao<Department> {
 
-    List<Department> findAll();
 }

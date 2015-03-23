@@ -1,19 +1,16 @@
 package ru.shmoylova.tracker.dao;
 
 import java.util.List;
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
+import org.apache.lucene.search.Query;
+import org.hibernate.CacheMode;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
+import org.hibernate.search.MassIndexer;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import ru.shmoylova.tracker.entity.Department;
 import ru.shmoylova.tracker.entity.Employee;
 import ru.shmoylova.tracker.entity.Role;
 import ru.shmoylova.tracker.interfaces.dao.IEmployeeDao;
-import ru.shmoylova.tracker.util.GenericDaoHibernateImpl;
 
 /**
  *
@@ -31,100 +28,62 @@ public class EmployeeDao extends GenericDaoHibernateImpl<Employee> implements IE
     private static final String SEARCH_PARAMETR_ANY = "*";
     private static final String HQL_QUERY_LOGIN_CHECK = "from Employee emp where emp.login = :login and emp.pass = :pass";
 
-    public EmployeeDao(SessionFactory factory) {
-        super(factory);
+    public EmployeeDao() {
     }
 
     @Override
-    public List<Employee> find(String... searchTerm) {
-        List<Employee> empList;
-        Session session = getSessionFactory().openSession();
-        FullTextSession fullTextSession = Search.getFullTextSession(session);
-        Transaction tx = fullTextSession.beginTransaction();
-        try {
-            QueryBuilder qb = fullTextSession.getSearchFactory()
-                    .buildQueryBuilder().forEntity(Employee.class).get();
-            org.apache.lucene.search.Query luceneQuery = qb
-                    .keyword()
-                    .onFields(FIELD_LASTNAME, FIELD_FIRSTNAME, FIELD_SURNAME, FIELD_JOB, FIELD_LOGIN, FIELD_DEPT)
-                    .matching(searchTerm[0] + SEARCH_PARAMETR_ANY)
-                    .createQuery();
+    public List<Employee> find(FullTextSession fullTextSession, String... searchTerm) {
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
+                .buildQueryBuilder().forEntity(Employee.class).get();
+        Query luceneQuery = queryBuilder
+                .keyword()
+                .onFields(FIELD_LASTNAME, FIELD_FIRSTNAME, FIELD_SURNAME, FIELD_JOB, FIELD_LOGIN, FIELD_DEPT)
+                .matching(searchTerm[0] + SEARCH_PARAMETR_ANY)
+                .createQuery();
 
-            empList = fullTextSession.createFullTextQuery(luceneQuery).list();
-
-            for (Employee emp : empList) {
-                Hibernate.initialize(emp.getDepartment());
-            }
-            tx.commit();
-        } catch (HibernateException he) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            throw he;
-        } finally {
-            session.close();
-        }
+        List<Employee> empList = fullTextSession.createFullTextQuery(luceneQuery).list();
         return empList;
     }
 
     @Override
-    public List<Employee> find(Department dept) {
+    public List<Employee> find(Session session, Department dept) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Employee> find(Department dept, String jobTitle) {
+    public List<Employee> find(Session session, Department dept, String jobTitle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Employee> find(Role role) {
+    public List<Employee> find(Session session, Role role) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Employee loginRequest(String login, String pass) {
-        Employee emp;
-        Session session = getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            emp = (Employee) getSession().createQuery(HQL_QUERY_LOGIN_CHECK)
-                    .setString(FIELD_PASS, pass)
-                    .setString(FIELD_LOGIN, login.trim()).uniqueResult();
-            tx.commit();
-        } catch (HibernateException he) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            throw he;
-        } finally {
-            session.close();
-        }
+    public Employee loginRequest(Session session, String login, String pass) {
+        Employee emp = (Employee) session.createQuery(HQL_QUERY_LOGIN_CHECK)
+                .setString(FIELD_PASS, pass)
+                .setString(FIELD_LOGIN, login.trim()).uniqueResult();
+
         return emp;
     }
 
     @Override
-    public List<Employee> findAll() {
-        List<Employee> empList;
-        Session session = getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            empList = session.createCriteria(Employee.class).list();
-            for (Employee emp : empList) {
-                Hibernate.initialize(emp.getDepartment());
-            }
-            tx.commit();
-        } catch (HibernateException he) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            throw he;
-        } finally {
-            session.close();
-        }
+    public List<Employee> getAll(Session session) {
+        List<Employee> empList = session.createCriteria(Employee.class).list();
         return empList;
     }
 
+    public void indexMass(FullTextSession fullTextSession) {
+        MassIndexer index = null;
+            index = fullTextSession
+                    .createIndexer()
+                    .typesToIndexInParallel(2)
+                    .batchSizeToLoadObjects(25)
+                    .cacheMode(CacheMode.NORMAL)
+                    .threadsToLoadObjects(5)
+                    .idFetchSize(150);
+            index.start();
+    }
 }

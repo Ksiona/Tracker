@@ -1,13 +1,13 @@
 package ru.shmoylova.tracker.web.controllers;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Formatter;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import ru.shmoylova.tracker.entity.Department;
 import ru.shmoylova.tracker.entity.Employee;
@@ -16,9 +16,9 @@ import ru.shmoylova.tracker.entity.Role;
 import ru.shmoylova.tracker.extra.IController;
 import ru.shmoylova.tracker.interfaces.beans.EmployeeSessionBeanLocal;
 
-@ManagedBean
+@ManagedBean(name="employeeController")
 @SessionScoped
-public class EmployeeController implements IController {
+public class EmployeeController implements IController, Serializable {
 
     @EJB
     EmployeeSessionBeanLocal employeeBean;
@@ -34,25 +34,39 @@ public class EmployeeController implements IController {
     private static final String PAGE_EDIT_EMP = "edit-emp";
     private static final String PAGE_DELETE_EMP = "delete-emp";
     private static final String FORMATTER_FULL_NAME = "%s %s %s";
-    private static final int ROWS_ON_PAGE = 10;
     private int empId;
-    private DataModel empDataModel;
-
-    private List<Employee> empList;
-
-    private int startId = 1;
-    private int endId = 10;
-    private int recordCount;
-
+    private List<Employee> selectedList;
+    private List<Employee> list;
     private Employee current;
-    private int selectedItemIndex;
 
     public EmployeeController() {
     }
 
+    @PostConstruct
+    public void init() {
+        list = getList();
+    }
+
+    public List<Employee> getSelectedList() {
+        return selectedList;
+    }
+
+    public void setSelectedList(List<Employee> selectedList) {
+        this.selectedList = selectedList;
+    }
+
     @Override
     public List<Employee> getList() {
-        return employeeBean.getAllEmployees();
+        if (list == null) {
+            return employeeBean.getAllEmployees();
+        } else {
+            return list;
+        }
+    }
+
+    @Override
+    public void setList(List empList) {
+        this.list = empList;
     }
 
     public String save() {
@@ -85,7 +99,6 @@ public class EmployeeController implements IController {
     public Employee getSelected() {
         if (current == null) {
             current = new Employee(new Department(), new Role(), new Permission());
-            selectedItemIndex = -1;
         }
         return current;
     }
@@ -96,96 +109,32 @@ public class EmployeeController implements IController {
         return fmt.toString();
     }
 
-    public DataModel getEmpDataModel() {
-        try {
-            if (empDataModel == null) {
-                empDataModel = new ListDataModel(getPageContent());
-            }
-        } catch (NullPointerException npe) {
-            messages.printError(messages.getBundle(messages.BUNDLE_MSG_LOC, ERROR_PREFIX_FOR_LIST, ERROR_REQUEST));
-        }
-        return empDataModel;
-    }
-
-    public void setEmpDataModel(DataModel empDataModel) {
-        this.empDataModel = empDataModel;
-    }
-
-    public List<Employee> getPageContent() {
-        if (empList == null) {
-            this.empList = getList();
-        }
-        List<Employee> pageContent = new ArrayList<>();
-        for (int i = startId - 1; i < endId; i++) {
-            if (empList.size() == i) {
-                break;
-            }
-            pageContent.add(empList.get(i));
-        }
-        recordCount = empList.size();
-        return pageContent;
-    }
-
     @Override
     public void recreateModel() {
-        setEmpDataModel(null);
         setList(null);
     }
 
-    public boolean isHasNextPage() {
-        if (endId <= recordCount) {
-            return true;
+    public void prepareView() {
+        navigatiionHandler(PAGE_EMPLOYEE, PAGE_BROWSE);
+    }
+
+    public void prepareEdit(Employee emp) {
+        if (emp != null) {
+            current = emp;
         }
-        return false;
-    }
-
-    public boolean isHasPreviousPage() {
-        if (startId - ROWS_ON_PAGE > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public String next() {
-        startId = endId + 1;
-        endId = endId + ROWS_ON_PAGE;
-        recreateModel();
-        return PAGE_EMPLOYEE;
-    }
-
-    public String previous() {
-        startId = startId - ROWS_ON_PAGE;
-        endId = endId - ROWS_ON_PAGE;
-        recreateModel();
-        return PAGE_EMPLOYEE;
-    }
-
-    public int getPageSize() {
-        return ROWS_ON_PAGE;
-    }
-
-    public String prepareView() {
-        current = (Employee) getEmpDataModel().getRowData();
-        return PAGE_BROWSE;
-    }
-
-    public String prepareEdit() {
-        current = (Employee) getEmpDataModel().getRowData();
-        return PAGE_EDIT_EMP;
+        navigatiionHandler(PAGE_EMPLOYEE, PAGE_EDIT_EMP);
     }
 
     public String prepareDelete() {
-        current = (Employee) getEmpDataModel().getRowData();
         return PAGE_DELETE_EMP;
     }
 
     public String prepareList() {
-        recreateModel();
         return PAGE_EMPLOYEE;
     }
 
-    @Override
-    public void setList(List empList) {
-        this.empList = empList;
+    public void navigatiionHandler(String actionPage, String outcomePage) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getApplication().getNavigationHandler().handleNavigation(context, actionPage, outcomePage);
     }
 }

@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import ru.shmoylova.tracker.entity.Employee;
 import ru.shmoylova.tracker.extra.IController;
 import ru.shmoylova.tracker.extra.ResultItem;
@@ -16,7 +17,7 @@ import ru.shmoylova.tracker.interfaces.beans.EmployeeSessionBeanLocal;
  * @author Ksiona
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class SearchController {
 
     private static final String SEARCH_RESULT = "result";
