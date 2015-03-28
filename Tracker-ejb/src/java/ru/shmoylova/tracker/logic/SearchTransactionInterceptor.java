@@ -25,7 +25,7 @@ public class SearchTransactionInterceptor {
     public Object addLog(InvocationContext context) {
         Transaction tx = null;
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             FullTextSession fullTextSession = Search.getFullTextSession(session);
             Field prop = context.getTarget().getClass().getDeclaredField(FIELD_SESSION);
             prop.setAccessible(true);

@@ -6,7 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.Stateless;
 import javax.interceptor.ExcludeClassInterceptors;
 import javax.interceptor.Interceptors;
@@ -81,8 +80,8 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
     }
 
     @Override
-    public void remove(Employee employee) {
-        empDao.delete(session, employee);
+    public void remove(List<Employee> empList) {
+        empDao.delete(session, empList);
     }
 
     @ExcludeClassInterceptors
@@ -90,12 +89,5 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal {
     @Override
     public List<Employee> find(String... arr) {
         return empDao.find(fullTextSession, arr);
-    }
-
-    @ExcludeClassInterceptors
-    @Interceptors(SearchTransactionInterceptor.class)
-    @Override
-    public void reIndexEntireDatabase() {
-        empDao.indexMass(fullTextSession);
     }
 }

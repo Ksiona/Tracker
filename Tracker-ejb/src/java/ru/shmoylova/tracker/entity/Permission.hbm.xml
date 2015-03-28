@@ -19,29 +19,11 @@
             </key>
             <one-to-many class="ProductionUnit" />
         </set>
-        <set name="employees" table="employee" inverse="true" lazy="false" fetch="join">
-            <key>
-                <column name="permID" not-null="true" />
-            </key>
-            <one-to-many class="Employee" />
-        </set>
-        <set name="activities" table="activity" inverse="true" lazy="true" fetch="select">
+        <set name="activities" table="activity" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="permID" not-null="true" />
             </key>
             <one-to-many class="Activity" />
-        </set>
-        <set name="departments" table="department" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="permID" not-null="true" />
-            </key>
-            <one-to-many class="Department" />
-        </set>
-        <set name="activityTypes" table="activity_type" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="permID" not-null="true" />
-            </key>
-            <one-to-many class="ActivityType" />
         </set>
     </class>
 </hibernate-mapping>

@@ -1,7 +1,5 @@
 package ru.shmoylova.tracker.extra;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;

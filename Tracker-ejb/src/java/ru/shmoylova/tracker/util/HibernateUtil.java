@@ -40,6 +40,7 @@ public class HibernateUtil {
         try {
             Session session = getSessionFactory().getCurrentSession();
             ManagedSessionContext.unbind(sessionFactory);
+            session.clear();
             cnt = session.close();
             return cnt;
         } catch (HibernateException | NullPointerException ex) {

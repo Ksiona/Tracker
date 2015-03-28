@@ -7,34 +7,57 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui">
-    <h:form>
+    <h:form id="emp_menu_bar">
         <table style="border-style: hidden;">
             <tbody>
-                <tr>
+                <tr style="border: #AFAFAF">
                     <td align="left">
                         <p:commandButton value="#{content.button_new_value}"  
+                                         id="new_emp_cb"
                                          actionListener="#{employeeController.prepareEdit(null)}" 
                                          icon="ui-icon-contact" 
                                          rendered="#{sessionHolderBean.visible()}"/>
                         <p:commandButton value="#{content.action_edit}" 
+                                         id="edit_emp_cb"
                                          actionListener="#{employeeController.prepareEdit(employeeController.selectedList[0])}" />
                         <p:commandButton process=":jsfFormEmpTable:checkboxDT"
-                                         update=":removingForm:removingDetail"
-                                         value="#{content.action_remove}" 
-                                         oncomplete="PF('removingDialog').show()" />
+                                         value="#{content.action_remove}"
+                                         id="remove_emp_cb"
+                                         actionListener="#{employeeController.delete()}">
+                            <p:confirm header="Confirmation" message="#{content.delete_confirmation} #{removingDetail}" icon="ui-icon-alert" />
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:outputPanel id="removingDetail" style="text-align:left; ">
+                                <ui:repeat value="#{employeeController.selectedList}" var="sel">
+                                    <h:outputText value="#{sel.lastName} #{sel.firstName} #{sel.surName}" style="display:block"/>
+                                </ui:repeat>
+                                <br/>
+                            </p:outputPanel>
+                            <p:commandButton value="Yes" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" 
+                                             actionListener="#{employeeController.delete()}"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+
                         <p:commandButton process=":jsfFormEmpTable:checkboxDT" 
                                          icon="ui-icon-search" 
-                                         value="#{content.action_browse}"  
+                                         value="#{content.action_browse}"
+                                         id="browse_emp_cb"
                                          actionListener="#{employeeController.prepareView()}"/>
                     </td>
                     <td align="right" width="23%">
-                        <p:commandButton value="#{content.button_import}" 
-                                         actionListener="#{employeeController.print()}" 
-                                         icon="ui-icon-document"
-                                         rendered="#{sessionHolderBean.visible()}"/>
-                        <p:commandButton value="#{content.button_export}" 
-                                         actionListener="#{employeeController.navigatiionHandler(this, 'export')}" 
+                        <p:commandButton process=":jsfFormEmpTable:checkboxDT" 
+                                         value="#{content.button_export}"
+                                         id="export_emp_cb"
+                                         actionListener="#{fileManager.getXmlData(employeeController.selectedList)}" 
                                          icon="ui-icon-document"/>
+                        <p:commandButton value="#{content.button_import}"
+                                         id="import_emp_cb"
+                                         action="import" 
+                                         rendered="#{sessionHolderBean.visible()}"
+                                         icon="ui-icon-document"/>
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     </td>
                     <c:if test="#{sessionHolderBean.visible()}">
                         <td align="right" width="23%" >

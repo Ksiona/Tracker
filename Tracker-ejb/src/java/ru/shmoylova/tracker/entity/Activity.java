@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlType;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
@@ -14,6 +15,7 @@ import org.hibernate.search.annotations.Resolution;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
 @Indexed
+@XmlType(propOrder = {"activityId", "activityDesc",  "dateWorks", "timeWorked", "activityType", "employee", "permission", "productionUnit"})
 public class Activity implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;

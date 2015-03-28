@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema id="TrackerXMLScheme.xsd" xmlns="TrackerXMLScheme.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:tns="http:\\localhost\8080\Tracker-war" 
+           targetNamespace="http:\\localhost\8080\Tracker-war" 
+           elementFormDefault="qualified">
+	
+    <xs:element name="xmlResult">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" type="tns:Employee" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="productionUnit" type="tns:ProductionUnit" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="activity" type="tns:Activity" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>	
+
+    <xs:complexType name="Employee">
+        <xs:sequence>
+            <xs:element name="empId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="lastName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="firstName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="surName" type="xs:string" minOccurs="0" maxOccurs="1"/>            
+            <xs:element name="jobTitle" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="login" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="pass" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="department" type="tns:Department" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="role" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="roleId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="roleName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="productionUnits"  type="tns:ProductionUnit" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="activities"  type="tns:Activity" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+    <xs:complexType name="ProductionUnit">
+        <xs:sequence>
+            <xs:element name="unitId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="unitTitle" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="unitDesc" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="conclusionDate" type="xs:date" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="expireDate" type="xs:date" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="employee" type="tns:Employee" minOccurs="0" maxOccurs="1" />
+            <xs:element name="permission" type="tns:Permission" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="activities"  type="tns:Activity" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Permission">
+        <xs:sequence>
+            <xs:element name="permId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="permissionGroupByReadPer" type="tns:PermissionGroup" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="permissionGroupByWritePer" type="tns:PermissionGroup" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="PermissionGroup">
+        <xs:sequence>
+            <xs:element name="groupId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="groupName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+        
+    <xs:complexType name="Activity">
+        <xs:sequence>
+            <xs:element name="activityId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="activityDesc" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="dateWorks" type="xs:date" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="timeWorked" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="activityType" type="tns:ActivityType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="employee" type="tns:Employee" minOccurs="1" maxOccurs="1" />
+            <xs:element name="permission" type="tns:Permission" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="productionUnit"  type="tns:ProductionUnit" minOccurs="1" maxOccurs="1"/>             
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ActivityType">
+        <xs:sequence>
+            <xs:element name="typeId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="typeTitle" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="department" type="tns:Department" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Department">
+        <xs:sequence>
+            <xs:element name="deptId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="deptName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="employee" type="tns:Employee" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="activityType" type="tns:ActivityType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

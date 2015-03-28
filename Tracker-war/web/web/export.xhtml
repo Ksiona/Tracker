@@ -3,10 +3,28 @@
 <ui:composition template="/web/templates/layout.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="body" class="center_content">
         <h:form>
-            <p align="center">Находится в процессе разработки</p>
+            <p:toolbar style="height: 30px;">
+                <f:facet name="right">
+                    <p:commandButton value="#{content.action_save}" 
+                                     icon="ui-icon-arrowthick-1-s" 
+                                     ajax="false" 
+                                     onclick="PrimeFaces.monitorDownload(start, stop);" >
+                        <p:fileDownload value="#{fileManager.file}" />
+                    </p:commandButton>
+                    <p:commandButton value="#{content.action_cancel}" 
+                                     icon="ui-icon-trash" 
+                                     action="emplist"/>
+                </f:facet>
+            </p:toolbar>
+
+            <ui:include src="/exportedData/#{fileManager.exportPath}"/>
+            <a href="/exportedData/#{fileManager.getExportPath()}">This is your file, dude!</a>
+
         </h:form>
     </ui:define>
 </ui:composition>

@@ -3,29 +3,30 @@ package ru.shmoylova.tracker.web.controllers;
 import java.io.Serializable;
 import java.util.Formatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import ru.shmoylova.tracker.entity.Department;
 import ru.shmoylova.tracker.entity.Employee;
-import ru.shmoylova.tracker.entity.Permission;
 import ru.shmoylova.tracker.entity.Role;
 import ru.shmoylova.tracker.extra.IController;
 import ru.shmoylova.tracker.interfaces.beans.EmployeeSessionBeanLocal;
 
-@ManagedBean(name="employeeController")
+@ManagedBean(name = "employeeController")
 @SessionScoped
 public class EmployeeController implements IController, Serializable {
 
     @EJB
     EmployeeSessionBeanLocal employeeBean;
-    @Inject
-    MessagesController messages;
+    @ManagedProperty(value = MANAGED_PROPERTY_MESSAGES)
+    private MessagesController messages;
 
-    private static final String ERROR_PREFIX_FOR_LIST = "error_employee_table_prefix";
+    private static final String MANAGED_PROPERTY_MESSAGES = "#{messageController}";
     private static final String ERROR_PREFIX_FOR_EDIT = "error_edit_employee_prefix";
     private static final String ERROR_PREFIX_FOR_DELETE = "error_delete_employee_prefix";
     private static final String ERROR_REQUEST = "request_error";
@@ -45,6 +46,10 @@ public class EmployeeController implements IController, Serializable {
     @PostConstruct
     public void init() {
         list = getList();
+    }
+
+    public void setMessages(MessagesController messages) {
+        this.messages = messages;
     }
 
     public List<Employee> getSelectedList() {
@@ -74,21 +79,18 @@ public class EmployeeController implements IController, Serializable {
             employeeBean.insertOrUpdate(current);
         } catch (Exception e) {
             messages.printError(messages.getBundle(messages.BUNDLE_MSG_LOC, ERROR_PREFIX_FOR_EDIT, ERROR_REQUEST));
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, e);
         }
         current = null;
         recreateModel();
         return PAGE_EMPLOYEE;
     }
 
-    public String delete() {
-        try {
-            employeeBean.remove(current);
-            current = null;
-        } catch (Exception e) {
-            messages.printError(messages.getBundle(messages.BUNDLE_MSG_LOC, ERROR_PREFIX_FOR_DELETE, ERROR_REQUEST));
-        }
-        recreateModel();
-        return PAGE_EMPLOYEE;
+    public void delete() {
+        employeeBean.remove(selectedList);
+        selectedList = null;
+        navigatiionHandler(PAGE_EMPLOYEE, PAGE_EMPLOYEE);
+
     }
 
     public String cancel() {
@@ -98,7 +100,7 @@ public class EmployeeController implements IController, Serializable {
 
     public Employee getSelected() {
         if (current == null) {
-            current = new Employee(new Department(), new Role(), new Permission());
+            current = new Employee(new Department(), new Role());
         }
         return current;
     }
@@ -111,7 +113,8 @@ public class EmployeeController implements IController, Serializable {
 
     @Override
     public void recreateModel() {
-        setList(null);
+        selectedList = null;
+        list = employeeBean.getAllEmployees();
     }
 
     public void prepareView() {
@@ -131,6 +134,10 @@ public class EmployeeController implements IController, Serializable {
 
     public String prepareList() {
         return PAGE_EMPLOYEE;
+    }
+
+    public void print() {
+        messages.printInfo("Success");
     }
 
     public void navigatiionHandler(String actionPage, String outcomePage) {

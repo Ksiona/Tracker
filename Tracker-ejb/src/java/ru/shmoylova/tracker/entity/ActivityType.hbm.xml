@@ -10,9 +10,6 @@
         <many-to-one name="department" class="Department" fetch="select">
             <column name="deptID" not-null="true" />
         </many-to-one>
-        <many-to-one name="permission" class="Permission" fetch="select">
-            <column name="permID" not-null="true" />
-        </many-to-one>
         <property name="typeTitle" type="string">
             <column name="typeTitle" length="100" not-null="true" />
         </property>

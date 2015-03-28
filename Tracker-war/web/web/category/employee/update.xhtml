@@ -34,10 +34,6 @@
                     <h:selectOneListbox id="empRole"  value="#{employeeController.selected.role}" converter="#{roleConverter}" size="1" class="selector_list">
                         <f:selectItems value="#{permissionController.roleList}" var="role" itemLabel="#{role.roleName}" itemValue="#{role}"/>
                     </h:selectOneListbox>
-                    <h:outputText value="#{content.permission}"/>
-                    <h:selectOneListbox id="objPermission"  value="#{employeeController.selected.permission}" converter="#{permissionConverter}" size="1" class="selector_list">
-                        <f:selectItems value="#{permissionController.permList}" var="perm" itemLabel="#{perm.permId}" itemValue="#{perm}"/>
-                    </h:selectOneListbox>
                     <h:outputText value="#{content.pass}"/>
                     <h:inputSecret id="pass" value="#{employeeController.selected.pass}">
                         <f:attribute name="lastName" value="#{lastName}" />

@@ -12,10 +12,7 @@ public class Permission implements Serializable, BaseEntity {
     private PermissionGroup permissionGroupByReadPer;
     private PermissionGroup permissionGroupByWritePer;
     private Set<ProductionUnit> productionUnits = new HashSet<>(0);
-    private Set<Employee> employees = new HashSet<>(0);
-    private Set<Activity> activities = new HashSet<>(0);
-    private Set<Department> departments = new HashSet<>(0);
-    private Set<ActivityType> activityTypes = new HashSet<>(0);
+    private Set<Activity> activities =  new HashSet<>(0);
 
     public Permission() {
     }
@@ -26,15 +23,13 @@ public class Permission implements Serializable, BaseEntity {
         this.permissionGroupByWritePer = permissionGroupByWritePer;
     }
 
-    public Permission(int permId, PermissionGroup permissionGroupByReadPer, PermissionGroup permissionGroupByWritePer, Set<ProductionUnit> productionUnits, Set<Employee> employees, Set<Activity> activities, Set<Department> departments, Set<ActivityType> activityTypes) {
+    public Permission(int permId, PermissionGroup permissionGroupByReadPer, 
+            PermissionGroup permissionGroupByWritePer, Set<ProductionUnit> productionUnits, Set<Activity> activities) {
         this.permId = permId;
         this.permissionGroupByReadPer = permissionGroupByReadPer;
         this.permissionGroupByWritePer = permissionGroupByWritePer;
         this.productionUnits = productionUnits;
-        this.employees = employees;
         this.activities = activities;
-        this.departments = departments;
-        this.activityTypes = activityTypes;
     }
 
     public int getPermId() {
@@ -69,36 +64,12 @@ public class Permission implements Serializable, BaseEntity {
         this.productionUnits = productionUnits;
     }
 
-    public Set<Employee> getEmployees() {
-        return this.employees;
-    }
-
-    public void setEmployees(Set<Employee> employees) {
-        this.employees = employees;
-    }
-
     public Set<Activity> getActivities() {
         return this.activities;
     }
 
     public void setActivities(Set<Activity> activities) {
         this.activities = activities;
-    }
-
-    public Set<Department> getDepartments() {
-        return this.departments;
-    }
-
-    public void setDepartments(Set<Department> departments) {
-        this.departments = departments;
-    }
-
-    public Set<ActivityType> getActivityTypes() {
-        return this.activityTypes;
-    }
-
-    public void setActivityTypes(Set<ActivityType> activityTypes) {
-        this.activityTypes = activityTypes;
     }
 
     @Override

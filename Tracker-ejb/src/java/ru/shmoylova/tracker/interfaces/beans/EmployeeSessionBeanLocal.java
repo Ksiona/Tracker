@@ -17,10 +17,8 @@ public interface EmployeeSessionBeanLocal {
 
     void insertOrUpdate(Employee employee);
 
-    void remove(Employee employee);
+    void remove(List<Employee> empList);
 
     List<Employee> find(String... arr);
-
-    void reIndexEntireDatabase();
 
 }

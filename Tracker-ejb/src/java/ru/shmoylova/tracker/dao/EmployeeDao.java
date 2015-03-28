@@ -2,10 +2,8 @@ package ru.shmoylova.tracker.dao;
 
 import java.util.List;
 import org.apache.lucene.search.Query;
-import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.search.MassIndexer;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import ru.shmoylova.tracker.entity.Department;
 import ru.shmoylova.tracker.entity.Employee;
@@ -71,19 +69,7 @@ public class EmployeeDao extends GenericDaoHibernateImpl<Employee> implements IE
 
     @Override
     public List<Employee> getAll(Session session) {
-        List<Employee> empList = session.createCriteria(Employee.class).list();
+        List<Employee> empList = session.createQuery("from Employee").list();
         return empList;
-    }
-
-    public void indexMass(FullTextSession fullTextSession) {
-        MassIndexer index = null;
-            index = fullTextSession
-                    .createIndexer()
-                    .typesToIndexInParallel(2)
-                    .batchSizeToLoadObjects(25)
-                    .cacheMode(CacheMode.NORMAL)
-                    .threadsToLoadObjects(5)
-                    .idFetchSize(150);
-            index.start();
     }
 }

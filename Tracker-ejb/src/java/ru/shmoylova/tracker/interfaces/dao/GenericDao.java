@@ -1,5 +1,6 @@
 package ru.shmoylova.tracker.interfaces.dao;
 
+import java.util.List;
 import org.hibernate.Session;
 
 /**
@@ -14,6 +15,6 @@ public interface GenericDao<T extends BaseEntity> {
 
     void update(Session session, T entity);
 
-    void delete(Session session, T entity);
+    void delete(Session session, List<T> entities);
 
 }

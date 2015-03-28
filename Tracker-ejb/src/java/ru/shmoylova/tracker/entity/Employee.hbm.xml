@@ -10,9 +10,6 @@
         <many-to-one name="department" cascade="save-update" class="Department" fetch="join">
             <column name="deptID" not-null="true" />
         </many-to-one>
-        <many-to-one name="permission" cascade="save-update" class="Permission" fetch="join">
-            <column name="permID" not-null="true" />
-        </many-to-one>
         <many-to-one name="role" cascade="save-update" class="Role" fetch="join">
             <column name="roleID" not-null="true" />
         </many-to-one>
@@ -34,13 +31,13 @@
         <property name="pass" type="string">
             <column name="pass" length="15" not-null="true" />
         </property>
-        <set name="productionUnits" table="production_unit" inverse="true" lazy="true" fetch="join">
+        <set name="productionUnits" cascade="delete" table="production_unit" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="ownerID" not-null="true" />
             </key>
             <one-to-many class="ProductionUnit" />
         </set>
-        <set name="activities" table="activity" inverse="true" lazy="true" fetch="join">
+        <set name="activities" cascade="delete" table="activity" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="ownerID" not-null="true" />
             </key>

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlType;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -12,6 +13,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
 @Indexed
+@XmlType(propOrder = {"typeId", "typeTitle", "department", "activities"})
 public class ActivityType implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -19,7 +21,6 @@ public class ActivityType implements Serializable, BaseEntity {
     private int typeId;
     @ContainedIn
     private Department department;
-    private Permission permission;
     @Field
     private String typeTitle;
     @IndexedEmbedded
@@ -28,17 +29,15 @@ public class ActivityType implements Serializable, BaseEntity {
     public ActivityType() {
     }
 
-    public ActivityType(int typeId, Department department, Permission permission, String typeTitle) {
+    public ActivityType(int typeId, Department department, String typeTitle) {
         this.typeId = typeId;
         this.department = department;
-        this.permission = permission;
         this.typeTitle = typeTitle;
     }
 
-    public ActivityType(int typeId, Department department, Permission permission, String typeTitle, Set<Activity> activities) {
+    public ActivityType(int typeId, Department department, String typeTitle, Set<Activity> activities) {
         this.typeId = typeId;
         this.department = department;
-        this.permission = permission;
         this.typeTitle = typeTitle;
         this.activities = activities;
     }
@@ -57,14 +56,6 @@ public class ActivityType implements Serializable, BaseEntity {
 
     public void setDepartment(Department department) {
         this.department = department;
-    }
-
-    public Permission getPermission() {
-        return this.permission;
-    }
-
-    public void setPermission(Permission permission) {
-        this.permission = permission;
     }
 
     public String getTypeTitle() {

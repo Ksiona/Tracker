@@ -7,7 +7,7 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="body" class="center_content">
         <c:if test="#{sessionHolderBean.getUserID() > 0}">
-            <h:form>
+
                 <div style="padding:5px" class="thead">
                     #{content.search_result}
                 </div>
@@ -18,7 +18,7 @@
                         </c:if>
                     </c:forEach>
                 </h:panelGroup>
-            </h:form>
+
             <ui:include src="/web/category/employee/include/removingForm.xhtml"/>
         </c:if>
         <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">

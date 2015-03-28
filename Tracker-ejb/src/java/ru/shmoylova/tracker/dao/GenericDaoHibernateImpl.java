@@ -32,9 +32,11 @@ public abstract class GenericDaoHibernateImpl<T extends BaseEntity> implements G
     }
 
     @Override
-    public void delete(Session session, T entity) {
-        session.delete(entity);
+    public void delete(Session session, List<T> entities) {
+        for (T entity : entities) {
+            session.delete(entity);
+        }
     }
-    
+
     public abstract List<T> getAll(Session session);
 }

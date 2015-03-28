@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+<xmlResult xmlns="http:\\localhost\8080\Tracker-war">
+    <employee>
+        <empId>2</empId>
+        <lastName>Мазулин</lastName>
+        <firstName>Александр</firstName>
+        <surName>Александрович</surName>
+        <jobTitle>Начальник</jobTitle>
+        <login>Alexandro</login>
+        <pass>24FB61A98F7744B0CDE3B31A7298171E</pass>
+        <department>
+            <deptId>30</deptId>
+            <deptName>Геология</deptName>
+        </department>
+        <role>
+            <roleId>2</roleId>
+            <roleName>manager02</roleName>
+        </role>
+        <productionUnits>
+            <unitId>1</unitId>
+            <unitTitle>КНПЗ, водоотвод</unitTitle>
+            <unitDesc>тут что-то будет</unitDesc>
+            <conclusionDate>2012-08-27</conclusionDate>
+            <expireDate>2013-08-27</expireDate>
+        </productionUnits>
+    </employee>
+    <employee>
+        <empId>4</empId>
+        <lastName>Головина</lastName>
+        <firstName>Галина</firstName>
+        <surName>Владимировна</surName>
+        <jobTitle>Начальник</jobTitle>
+        <login>Galla</login>
+        <pass>24FB61A98F7744B0CDE3B31A7298171E</pass>
+        <department>
+            <deptId>40</deptId>
+            <deptName>Геодезия</deptName>
+        </department>
+        <role>
+            <roleId>1</roleId>
+            <roleName>manager01</roleName>
+        </role>
+    </employee>
+</xmlResult>
+

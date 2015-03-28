@@ -12,10 +12,10 @@
             <base-name>ru.shmoylova.tracker.web.nls.content</base-name>
             <var>content</var>
         </resource-bundle>
-        <lifecycle>
-            <phase-listener>ru.shmoylova.tracker.extra.ReqRespListener</phase-listener>
-        </lifecycle>
     </application>
+    <lifecycle>
+        <phase-listener>ru.shmoylova.tracker.extra.ReqRespListener</phase-listener>
+    </lifecycle>
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>

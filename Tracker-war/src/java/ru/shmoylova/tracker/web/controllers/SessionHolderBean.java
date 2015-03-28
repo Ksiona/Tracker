@@ -1,20 +1,23 @@
 package ru.shmoylova.tracker.web.controllers;
 
 import javax.ejb.EJB;
-import javax.faces.bean.ApplicationScoped;
+
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import ru.shmoylova.tracker.interfaces.beans.EmployeeSessionBeanLocal;
+import ru.shmoylova.tracker.interfaces.beans.ManagementSessionBeanLocal;
 
 /**
  *
  * @author Ksiona
  */
 @ManagedBean
-@ApplicationScoped
+@SessionScoped
 public class SessionHolderBean {
 
+    private static final String MANAGED_PROPERTY_MESSAGES = "#{messageController}";
     private static final String PAGE_INDEX = "index";
     private static final String PAGE_ERROR = "error";
     protected static final String ERROR_LOGIN_PREFIX = "error_login_page_prefix";
@@ -26,13 +29,16 @@ public class SessionHolderBean {
 
     @EJB
     EmployeeSessionBeanLocal employeeBean;
-    @Inject
-    MessagesController messages;
+    @EJB
+    ManagementSessionBeanLocal manager;
+    @ManagedProperty(value = MANAGED_PROPERTY_MESSAGES)
+    private MessagesController messages;
 
-    /**
-     * Creates a new instance of SessionHolder
-     */
     public SessionHolderBean() {
+    }
+
+    public void setMessages(MessagesController messages) {
+        this.messages = messages;
     }
 
     public String processExit() {
@@ -94,8 +100,9 @@ public class SessionHolderBean {
             return "true";
         }
     }
-    
-    public void indexUpdate(){
-        employeeBean.reIndexEntireDatabase();
+
+    public void indexUpdate() {
+        manager.reIndexEntireDatabase();
     }
+
 }

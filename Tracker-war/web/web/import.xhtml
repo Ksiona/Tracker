@@ -3,10 +3,19 @@
 <ui:composition template="/web/templates/layout.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
     <ui:define name="body" class="center_content">
-        <h:form>
-            <p align="center">Находится в процессе разработки</p>
+        <h:form enctype="multipart/form-data">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:fileUpload label="#{content.button_import}" 
+                          fileUploadListener="#{fileManager.handleFileUpload}"
+                          rendered="#{sessionHolderBean.visible()}"
+                          mode="advanced" 
+                          sizeLimit="100000" 
+                          auto="true"
+                          allowTypes="/(\.|\/)(xml)$/" >
+            </p:fileUpload>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.connection.datasource">jdbc/tracker</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
-        <property name="hibernate.show_sql">false</property>
-    
-        <property name="hibernate.current_session_context_class">managed</property>
-        <property name="hibernate.transaction.auto_close_session">false</property>
-        <property name="hibernate.connection.autocommit">false</property>
-        <property name="hibernate.cache.use_second_level_cache">false</property>
-        
-        <property name="hibernate.search.lucene_version">LUCENE_41</property>
-        <property name="hibernate.search.default.directory_provider">filesystem</property>
-        <property name="hibernate.search.locking_strategy">simple</property>
-        <property name="hibernate.search.default.indexBase">C:/Project/lucene/indexes</property>
-        <property name="hibernate.search.error_handler">log</property>
-        
-        <mapping resource="ru/shmoylova/tracker/entity/Department.hbm.xml"/>
-        <mapping resource="ru/shmoylova/tracker/entity/Employee.hbm.xml"/>
-        <mapping resource="ru/shmoylova/tracker/entity/Role.hbm.xml"/>
-        <mapping resource="ru/shmoylova/tracker/entity/GroupMember.hbm.xml"/>
-        <mapping resource="ru/shmoylova/tracker/entity/PermissionGroup.hbm.xml"/>
-        <mapping resource="ru/shmoylova/tracker/entity/Activity.hbm.xml"/>
-        <mapping resource="ru/shmoylova/tracker/entity/ActivityType.hbm.xml"/>
-        <mapping resource="ru/shmoylova/tracker/entity/Permission.hbm.xml"/>
-        <mapping resource="ru/shmoylova/tracker/entity/ProductionUnit.hbm.xml"/>
-    </session-factory>
+  <session-factory>
+    <property name="hibernate.connection.datasource">jdbc/tracker</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">managed</property>
+    <property name="hibernate.transaction.auto_close_session">false</property>
+    <property name="hibernate.connection.autocommit">false</property>
+    <property name="hibernate.cache.use_second_level_cache">false</property>
+    <property name="hibernate.search.lucene_version">LUCENE_41</property>
+    <property name="hibernate.search.default.directory_provider">filesystem</property>
+    <!--property name="hibernate.search.locking_strategy">simple</property-->
+    <property name="hibernate.search.default.indexBase">C:/Project/lucene/indexes</property>
+    <property name="hibernate.search.error_handler">log</property>
+    <property name="hibernate.transaction.flush_before_completion">false</property>
+    <mapping resource="ru/shmoylova/tracker/entity/Department.hbm.xml"/>
+    <mapping resource="ru/shmoylova/tracker/entity/Employee.hbm.xml"/>
+    <mapping resource="ru/shmoylova/tracker/entity/Role.hbm.xml"/>
+    <mapping resource="ru/shmoylova/tracker/entity/GroupMember.hbm.xml"/>
+    <mapping resource="ru/shmoylova/tracker/entity/PermissionGroup.hbm.xml"/>
+    <mapping resource="ru/shmoylova/tracker/entity/Activity.hbm.xml"/>
+    <mapping resource="ru/shmoylova/tracker/entity/ActivityType.hbm.xml"/>
+    <mapping resource="ru/shmoylova/tracker/entity/Permission.hbm.xml"/>
+    <mapping resource="ru/shmoylova/tracker/entity/ProductionUnit.hbm.xml"/>
+  </session-factory>
 </hibernate-configuration>

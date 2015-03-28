@@ -5,6 +5,7 @@ import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlType;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -46,6 +47,8 @@ import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
  * @see Employee.hbm.xml - xml mapping and the rules for the relationship
  */
 @Indexed
+@XmlType(propOrder = {"empId", "lastName", "firstName", "surName", "jobTitle", 
+    "login", "pass", "department", "role", "productionUnits", "activities"})
 public class Employee implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -54,7 +57,6 @@ public class Employee implements Serializable, BaseEntity {
     private int empId;
     @IndexedEmbedded
     private Department department;
-    private Permission permission;
     @ContainedIn
     private Role role;
     @Field
@@ -76,10 +78,9 @@ public class Employee implements Serializable, BaseEntity {
     public Employee() {
     }
 
-    public Employee(int empId, Department department, Permission permission, Role role, String lastName, String firstName, String jobTitle, String login, String pass) {
+    public Employee(int empId, Department department, Role role, String lastName, String firstName, String jobTitle, String login, String pass) {
         this.empId = empId;
         this.department = department;
-        this.permission = permission;
         this.role = role;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -88,10 +89,9 @@ public class Employee implements Serializable, BaseEntity {
         this.pass = pass;
     }
 
-    public Employee(int empId, Department department, Permission permission, Role role, String lastName, String firstName, String surName, String jobTitle, String login, String pass, Set<ProductionUnit> productionUnits, Set<Activity> activities) {
+    public Employee(int empId, Department department, Role role, String lastName, String firstName, String surName, String jobTitle, String login, String pass, Set<ProductionUnit> productionUnits, Set<Activity> activities) {
         this.empId = empId;
         this.department = department;
-        this.permission = permission;
         this.role = role;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -103,10 +103,9 @@ public class Employee implements Serializable, BaseEntity {
         this.activities = activities;
     }
 
-    public Employee(Department department, Role role, Permission permission) {
+    public Employee(Department department, Role role) {
         this.department = department;
         this.role = role;
-        this.permission = permission;
     }
 
     public int getEmpId() {
@@ -123,14 +122,6 @@ public class Employee implements Serializable, BaseEntity {
 
     public void setDepartment(Department department) {
         this.department = department;
-    }
-
-    public Permission getPermission() {
-        return this.permission;
-    }
-
-    public void setPermission(Permission permission) {
-        this.permission = permission;
     }
 
     public Role getRole() {

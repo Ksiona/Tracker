@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlType;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -12,12 +13,12 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import ru.shmoylova.tracker.interfaces.dao.BaseEntity;
 
 @Indexed
+@XmlType(propOrder = {"deptId", "deptName", "employees", "activityTypes"})
 public class Department implements Serializable, BaseEntity {
 
     private static final long serialVersionUID = 1L;
     @DocumentId
     private int deptId;
-    private Permission permission;
     @Field
     private String deptName;
     @IndexedEmbedded
@@ -28,15 +29,13 @@ public class Department implements Serializable, BaseEntity {
     public Department() {
     }
 
-    public Department(int deptId, Permission permission, String deptName) {
+    public Department(int deptId, String deptName) {
         this.deptId = deptId;
-        this.permission = permission;
         this.deptName = deptName;
     }
 
-    public Department(int deptId, Permission permission, String deptName, Set<ActivityType> activityTypes, Set<Employee> employees) {
+    public Department(int deptId, String deptName, Set<ActivityType> activityTypes, Set<Employee> employees) {
         this.deptId = deptId;
-        this.permission = permission;
         this.deptName = deptName;
         this.activityTypes = activityTypes;
         this.employees = employees;
@@ -48,14 +47,6 @@ public class Department implements Serializable, BaseEntity {
 
     public void setDeptId(int deptId) {
         this.deptId = deptId;
-    }
-
-    public Permission getPermission() {
-        return this.permission;
-    }
-
-    public void setPermission(Permission permission) {
-        this.permission = permission;
     }
 
     public String getDeptName() {

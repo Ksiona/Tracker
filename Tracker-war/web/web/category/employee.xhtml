@@ -6,11 +6,12 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="body">
-        <c:if test="#{sessionHolderBean.getUserID() > 0}">
+        <c:if test="#{sessionHolderBean.userID > 0}">
+            #{employeeController.recreateModel()}
             <ui:include src="/web/category/employee/include/employeeTable.xhtml"/>
             <ui:include src="/web/category/employee/include/removingForm.xhtml"/>
         </c:if>
-        <c:if test="#{!(sessionHolderBean.getUserID() > 0)}">
+        <c:if test="#{!(sessionHolderBean.userID > 0)}">
             <ui:include src="/web/error.xhtml"/>
         </c:if>
     </ui:define>
