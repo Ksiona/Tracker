@@ -22,7 +22,7 @@
                 </f:facet>
             </p:toolbar>
 
-            <ui:include src="/exportedData/#{fileManager.exportPath}"/>
+            <ui:include src="/exportedData/#{fileManager.getExportPath()}"/>
             <a href="/exportedData/#{fileManager.getExportPath()}">This is your file, dude!</a>
 
         </h:form>

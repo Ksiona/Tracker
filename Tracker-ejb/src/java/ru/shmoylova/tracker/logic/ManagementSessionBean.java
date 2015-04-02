@@ -1,6 +1,9 @@
 package ru.shmoylova.tracker.logic;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,17 +49,19 @@ public class ManagementSessionBean implements ManagementSessionBeanLocal {
     }
 
     @Override
-    public void getXmlData(List empList, URL xmlUrl, URL xhtmlUrl) {
+    public boolean getXmlData(List empList, String xhtmlName, String fileName) {
         XmlResult root = new XmlResult(empList, null, null);
-        try {
-            jaxbProcessor.executeMarshal(root, xmlUrl);
+        File xml = new File("./", fileName);
+        try (OutputStream xmlStream = new FileOutputStream(xml)){
+            jaxbProcessor.executeMarshal(root, xmlStream);
 
             xslUrl = new URL(FILEPATH_XSL_TEMPLATE);
-            xslt = new XsltProcessor(xmlUrl, xslUrl, xhtmlUrl);
+            xslt = new XsltProcessor(xml, xslUrl, xhtmlName);
             xslt.transform();
         } catch (JAXBException | IOException e) {
             Logger.getLogger(EmployeeSessionBean.class.getName()).log(Level.SEVERE, null, e);
         }
+        return true;
     }
 
     @Override

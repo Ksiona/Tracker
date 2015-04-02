@@ -31,7 +31,7 @@ import ru.shmoylova.tracker.logic.XmlResult;
 public class ValidatingTest {
 
     String TEST_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-            + "<xmlResult xmlns=\"http:\\\\localhost\\8080\\Tracker-war\">\n"
+            + "<ns2:xmlResult xmlns:ns2=\"http:\\\\localhost\\8080\\Tracker-war\">"
             + "<employee>\n"
             + "    <empId>1</empId>\n"
             + "    <lastName>last</lastName>\n"
@@ -49,7 +49,7 @@ public class ValidatingTest {
             + "        <roleName>mgr1</roleName>\n"
             + "    </role>\n"
             + "</employee>\n"
-            + "</xmlResult>";
+            + "</ns2:xmlResult>";
 
     public ValidatingTest() {
     }
@@ -77,7 +77,7 @@ public class ValidatingTest {
 
         JAXBContext jc = JAXBContext.newInstance(XmlResult.class);
         Unmarshaller unmarshaller = jc.createUnmarshaller();
-        unmarshaller.setSchema(schema);
+       // unmarshaller.setSchema(schema);
 
         unmarshaller.setEventHandler(new ValidationEventHandler() {
             @Override

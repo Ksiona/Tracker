@@ -15,7 +15,7 @@ public interface ManagementSessionBeanLocal {
 
     void reIndexEntireDatabase();
 
-    void getXmlData(List<? extends BaseEntity> empList, URL xmlUrl, URL xhtmlUrl);
+    boolean getXmlData(List<? extends BaseEntity> empList, String xhtmlPath, String fileName);
 
     JaxbProcessor getJaxbProcessor();
 }

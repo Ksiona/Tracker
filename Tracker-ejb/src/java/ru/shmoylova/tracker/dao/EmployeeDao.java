@@ -25,6 +25,7 @@ public class EmployeeDao extends GenericDaoHibernateImpl<Employee> implements IE
     private static final String FIELD_DEPT = "department.deptName";
     private static final String SEARCH_PARAMETR_ANY = "*";
     private static final String HQL_QUERY_LOGIN_CHECK = "from Employee emp where emp.login = :login and emp.pass = :pass";
+    private static final String HQL_QUERY_EMPLOYEES = "from Employee";
 
     public EmployeeDao() {
     }
@@ -69,7 +70,7 @@ public class EmployeeDao extends GenericDaoHibernateImpl<Employee> implements IE
 
     @Override
     public List<Employee> getAll(Session session) {
-        List<Employee> empList = session.createQuery("from Employee").list();
+        List<Employee> empList = session.createQuery(HQL_QUERY_EMPLOYEES).list();
         return empList;
     }
 }

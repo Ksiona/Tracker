@@ -24,8 +24,29 @@ public class XmlResult {
         this.employee = employee;
         this.productionUnit = productionUnit;
         this.activity = activity;
+        clearEmployees();
     }
 
+        private void clearEmployees() {
+        for (Employee emp : employee) {
+            emp.getDepartment().setEmployees(null);
+            emp.getDepartment().setActivityTypes(null);
+            emp.getRole().setEmployees(null);
+            emp.getRole().setGroupMembers(null);
+            for (ProductionUnit unit : emp.getProductionUnits()) {
+                unit.setActivities(null);
+                unit.setEmployee(null);
+                unit.setPermission(null);
+            }
+            for (Activity unit : emp.getActivities()) {
+                unit.setActivityType(null);
+                unit.setEmployee(null);
+                unit.setPermission(null);
+                unit.setProductionUnit(null);
+            }
+        }
+    }
+        
     public List<Employee> getEmployee() {
         return employee;
     }

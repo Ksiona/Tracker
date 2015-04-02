@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:ns2="http:\\localhost\8080\Tracker-war">
 
 <xsl:template match="/">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
@@ -9,7 +10,7 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui">
     <h:form>  
-  <xsl:for-each select="xmlResult/employee">
+  <xsl:for-each select="ns2:xmlResult/employee">
                     <table border="0">
                         <tr>
                             <th style="text-align:left">Name</th>

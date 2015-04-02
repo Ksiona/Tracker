@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -33,21 +32,17 @@ public class JaxbProcessor {
         this.unmarshaller = jc.createUnmarshaller();
     }
 
-    public void executeMarshal(XmlResult root, URL xmlUrl) throws JAXBException, IOException {
+    public void executeMarshal(XmlResult root, OutputStream xmlStream) throws JAXBException, IOException {
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        URLConnection conn = xmlUrl.openConnection();
-        conn.setDoOutput(true);
-        try (OutputStream outStream = conn.getOutputStream()) {
-            //TODO: store ref in DB
-            jaxbMarshaller.marshal(root, outStream);
-        }
+        //TODO: store ref in DB
+        jaxbMarshaller.marshal(root, xmlStream);
     }
 
     public void executeUnmarshalValidate(InputStream xml, String SCHEME_LOC) throws MalformedURLException, JAXBException, SAXException {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        URL xsd = new URL(SCHEME_LOC);
-        Schema schema = schemaFactory.newSchema(xsd);
-        unmarshaller.setSchema(schema);
+//        URL xsd = new URL(SCHEME_LOC);
+//        Schema schema = schemaFactory.newSchema(xsd);
+//        unmarshaller.setSchema(schema);
         unmarshaller.setEventHandler(new ValidationEventHandler() {
             @Override
             public boolean handleEvent(ValidationEvent event) {
